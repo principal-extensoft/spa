@@ -575,6 +575,82 @@
       font-weight: bold;
     }
     
+    /* Project and Phase Badge Styles */
+    .project-badge {
+      font-size: 0.65rem;
+      padding: 2px 6px;
+      border-radius: 3px;
+      margin: 1px 2px 1px 0;
+      display: inline-block;
+      font-weight: 600;
+      background: #e3f2fd;
+      color: #1976d2;
+      border: 1px solid #bbdefb;
+    }
+
+    .phase-badge {
+      font-size: 0.65rem;
+      padding: 2px 6px;
+      border-radius: 3px;
+      margin: 1px 2px 1px 0;
+      display: inline-block;
+      font-weight: 500;
+      background: #f3e5f5;
+      color: #7b1fa2;
+      border: 1px solid #e1bee7;
+    }
+
+    .badge-container {
+      margin-bottom: 4px;
+      line-height: 1.2;
+    }
+    
+    /* Global Filter Styles */
+    .global-filters {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      opacity: 0.7;
+      transition: opacity 0.2s ease;
+    }
+    
+    .global-filters:hover {
+      opacity: 1;
+    }
+    
+    .global-filters select {
+      background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(248,249,250,0.9));
+      border: 1px solid rgba(206,212,218,0.6);
+      border-radius: 4px;
+      padding: 2px 8px;
+      font-size: 0.8rem;
+      color: #495057;
+      min-width: 100px;
+      transition: all 0.2s ease;
+    }
+    
+    .global-filters select:focus {
+      opacity: 1;
+      border-color: rgba(0,123,255,0.4);
+      box-shadow: 0 0 0 0.1rem rgba(0,123,255,0.1);
+    }
+    
+    .global-filters .filter-clear {
+      background: transparent;
+      border: 1px solid rgba(206,212,218,0.4);
+      color: #6c757d;
+      border-radius: 3px;
+      padding: 2px 6px;
+      font-size: 0.7rem;
+      transition: all 0.2s ease;
+    }
+    
+    .global-filters .filter-clear:hover {
+      background: rgba(220,53,69,0.1);
+      border-color: rgba(220,53,69,0.3);
+      color: #dc3545;
+    }
+    
     .week-selector-cell {
       width: 60px;
       padding: 0;
@@ -739,14 +815,21 @@
     .calendar-day-header {
       background: linear-gradient(135deg, #f8f9fa, #e9ecef);
       border-bottom: 1px solid #dee2e6;
-      padding: 0.25rem 0.5rem;
+      padding: 0.2rem 0.4rem;
       font-size: 0.75rem;
       font-weight: 600;
+      height: 36px;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      justify-content: space-between;
+    }
+    
+    .day-number-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      height: 24px;
-      transition: all 0.2s ease;
     }
     
     .calendar-day:hover .calendar-day-header {
@@ -761,7 +844,7 @@
     
     .calendar-day-content {
       padding: 0.5rem;
-      height: calc(100% - 24px);
+      height: calc(100% - 36px);
       overflow: hidden;
       transition: all 0.2s ease;
     }
@@ -1567,6 +1650,125 @@
       min-width: 800px; /* Ensure minimum width for proper layout */
     }
     
+    /* New Calendar Progress Bar System */
+    .calendar-due-badge {
+      background: #007bff;
+      color: white;
+      border-radius: 12px;
+      padding: 2px 8px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+    }
+    
+    .calendar-time-indicators {
+      display: flex;
+      gap: 2px;
+      flex-wrap: nowrap;
+      align-items: center;
+      justify-content: flex-start;
+      overflow: hidden;
+    }
+    
+    .calendar-task-time {
+      background: #28a745;
+      color: white;
+      border-radius: 8px;
+      padding: 1px 4px;
+      font-size: 0.6rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 1px;
+      white-space: nowrap;
+    }
+    
+    .calendar-punch-time {
+      background: #ffc107;
+      color: #212529;
+      border-radius: 8px;
+      padding: 1px 4px;
+      font-size: 0.6rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 1px;
+      white-space: nowrap;
+    }
+    
+    .calendar-progress-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      height: 100%;
+      min-height: 73px;
+      overflow: hidden;
+      padding: 2px;
+    }
+    
+    .calendar-task-bar {
+      border-radius: 3px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.1);
+      display: flex;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+    
+    .calendar-task-bar.today-tomorrow {
+      border-width: 2px;
+      animation: pulse-urgent 2s infinite;
+    }
+    
+    .calendar-task-bar.overdue {
+      border-color: #dc3545 !important;
+      border-width: 2px;
+    }
+    
+    .calendar-task-bar.in-progress-no-time {
+      border-style: dashed;
+      border-width: 2px;
+    }
+    
+    .task-bar-progress {
+      height: 100%;
+      background: rgba(255, 255, 255, 0.3);
+      transition: width 0.3s ease;
+    }
+    
+    .task-bar-remaining {
+      height: 100%;
+      flex: 1;
+      background: rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Urgency Colors - Base */
+    .urgency-high-next-week { background: #ffcccc; }
+    .urgency-high-this-week { background: #ff6b6b; }
+    .urgency-high-today-tomorrow { background: #e74c3c; }
+    
+    .urgency-med-next-week { background: #fff3cd; }
+    .urgency-med-this-week { background: #ffd93d; }
+    .urgency-med-today-tomorrow { background: #f39c12; }
+    
+    .urgency-low-next-week { background: #d4edda; }
+    .urgency-low-this-week { background: #6bcf7f; }
+    .urgency-low-today-tomorrow { background: #27ae60; }
+    
+    @keyframes pulse-urgent {
+      0%, 100% { 
+        opacity: 1; 
+        transform: scale(1);
+      }
+      50% { 
+        opacity: 0.8; 
+        transform: scale(1.02);
+      }
+    }
+    
     .calendar-table .week-selector-header {
       width: 60px;
       min-width: 60px;
@@ -1590,7 +1792,7 @@
     
     .calendar-day {
       position: relative;
-      height: 120px;
+      height: 125px;
       vertical-align: top;
       padding: 8px;
       border: 1px solid #e9ecef;
@@ -1960,6 +2162,12 @@
       color: #6c757d;
     }
     
+    .card-meta-right {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
     .card-time-info {
       display: flex;
       justify-content: space-between;
@@ -2184,9 +2392,6 @@
     #velocityPrediction {
       background: rgba(255, 255, 255, 0.8);
       min-height: 80px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       padding: 0.5rem;
     }
     
@@ -2730,6 +2935,20 @@
             <small class="form-text text-muted">Auto-syncs with estimate until you manually edit it</small>
           </div>
           <div class="mb-3">
+            <label class="form-label">Project</label>
+            <select class="form-select" id="quickTaskProject">
+              <option value="">No Project (AdHoc)</option>
+              <!-- Projects will be populated here -->
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Phase</label>
+            <select class="form-select" id="quickTaskPhase">
+              <option value="">No Phase</option>
+              <!-- Phases will be populated here -->
+            </select>
+          </div>
+          <div class="mb-3">
             <label class="form-label">Category Lists</label>
             <div id="quickTaskCategoryLists" class="category-lists-selector">
               <!-- Category lists will be populated here -->
@@ -2747,6 +2966,17 @@
       <div class="header-bar">
         <h1 class="header-title"><i class="fas fa-tasks"></i> Task Time Tracker</h1>
         
+        <!-- Global Filters -->
+        <div class="global-filters">
+          <select id="globalProjectFilter">
+            <option value="">All Projects</option>
+          </select>
+          <select id="globalPhaseFilter">
+            <option value="">All Phases</option>
+          </select>
+          <button class="filter-clear" id="globalFilterClear" title="Clear all filters">×</button>
+        </div>
+        
         <!-- Import/Export on the far right -->
         <div class="header-actions">
           <!-- Punch Clock Button -->
@@ -2756,6 +2986,18 @@
           <!-- Category Lists Button -->
           <button class="btn btn-outline-info btn-sm" id="categoryListsBtn" data-bs-toggle="modal" data-bs-target="#categoryListsModal">
             <i class="fas fa-tags"></i> Categories
+          </button>
+          <!-- Projects Button -->
+          <button class="btn btn-outline-warning btn-sm" id="projectsBtn" data-bs-toggle="modal" data-bs-target="#projectsModal">
+            <i class="fas fa-project-diagram"></i> Projects
+          </button>
+          <!-- Phases Button -->
+          <button class="btn btn-outline-secondary btn-sm" id="phasesBtn" data-bs-toggle="modal" data-bs-target="#phaseListsModal">
+            <i class="fas fa-layer-group"></i> Phases
+          </button>
+          <!-- Todo List Button -->
+          <button class="btn btn-outline-success btn-sm" id="todoListBtn" data-bs-toggle="modal" data-bs-target="#todoListModal">
+            <i class="fas fa-list-check"></i>
           </button>
           <button class="btn btn-outline-secondary btn-sm" id="exportBtn">
             <i class="fas fa-download"></i> Export
@@ -2874,6 +3116,220 @@
     </div>
   </div>
 
+  <!-- Projects Manager Modal -->
+  <div class="modal fade" id="projectsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <i class="fas fa-project-diagram me-2"></i>Projects Manager
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <!-- Projects Panel -->
+            <div class="col-md-4">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h6 class="mb-0">Projects</h6>
+                <button id="newProjectBtn" class="btn btn-primary btn-sm">
+                  <i class="fas fa-plus me-1"></i>New Project
+                </button>
+              </div>
+              <div id="projectsContainer" class="list-group">
+                <!-- Projects will be populated here -->
+              </div>
+            </div>
+            
+            <!-- Editor Panel -->
+            <div class="col-md-8">
+              <div id="projectEditor" style="display: none;">
+                <form id="projectForm">
+                  <div class="mb-3">
+                    <label for="projectName" class="form-label">Project Name</label>
+                    <input type="text" class="form-control" id="projectName" required>
+                  </div>
+                  
+                  <div class="mb-3">
+                    <label for="projectDescription" class="form-label">Description</label>
+                    <textarea class="form-control" id="projectDescription" rows="3"></textarea>
+                  </div>
+                  
+                  <div class="mb-3">
+                    <label for="projectStatus" class="form-label">Status</label>
+                    <select class="form-select" id="projectStatus" required>
+                      <option value="Ready">Ready</option>
+                      <option value="Estimated">Estimated</option>
+                      <option value="InProgress">In Progress</option>
+                      <option value="Blocked">Blocked</option>
+                      <option value="Backburner">Backburner</option>
+                      <option value="OnHold">On Hold</option>
+                      <option value="Completed">Completed</option>
+                      <option value="Abandoned">Abandoned</option>
+                      <option value="Archived">Archived</option>
+                    </select>
+                  </div>
+                  
+                  <div class="mb-3">
+                    <label for="projectPhaseList" class="form-label">Phase List</label>
+                    <select class="form-select" id="projectPhaseList">
+                      <option value="">No Phase List</option>
+                      <!-- Phase lists will be populated here -->
+                    </select>
+                    <small class="form-text text-muted">Select a phase list to associate with this project</small>
+                  </div>
+                  
+                  <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-success">
+                      <i class="fas fa-save me-1"></i>Save Project
+                    </button>
+                    <button type="button" id="deleteProjectBtn" class="btn btn-danger" style="display: none;">
+                      <i class="fas fa-trash me-1"></i>Delete Project
+                    </button>
+                    <button type="button" id="cancelProjectBtn" class="btn btn-secondary">
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              </div>
+              
+              <div id="projectPlaceholder" class="text-center text-muted py-5">
+                <i class="fas fa-project-diagram fa-3x mb-3 opacity-50"></i>
+                <p>Select a project to edit, or create a new one.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase Lists Manager Modal -->
+  <div class="modal fade" id="phaseListsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <i class="fas fa-layer-group me-2"></i>Phase Lists Manager
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <!-- Lists Panel -->
+            <div class="col-md-4">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h6 class="mb-0">Phase Lists</h6>
+                <button id="newPhaseListBtn" class="btn btn-primary btn-sm">
+                  <i class="fas fa-plus me-1"></i>New List
+                </button>
+              </div>
+              <div id="phaseListsContainer" class="list-group">
+                <!-- Lists will be populated here -->
+              </div>
+            </div>
+            
+            <!-- Editor Panel -->
+            <div class="col-md-8">
+              <div id="phaseListEditor" style="display: none;">
+                <form id="phaseListForm">
+                  <div class="mb-3">
+                    <label for="phaseListTitle" class="form-label">List Title</label>
+                    <input type="text" class="form-control" id="phaseListTitle" required>
+                    <div class="form-text">Slug: <span id="phaseListSlugPreview"></span></div>
+                  </div>
+                  
+                  <div class="mb-3">
+                    <label for="phaseListDescription" class="form-label">Description</label>
+                    <textarea class="form-control" id="phaseListDescription" rows="2"></textarea>
+                  </div>
+                  
+                  <div class="mb-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <label class="form-label mb-0">Phases</label>
+                      <button type="button" id="addPhaseBtn" class="btn btn-outline-primary btn-sm">
+                        <i class="fas fa-plus me-1"></i>Add Phase
+                      </button>
+                    </div>
+                    <div id="phasesContainer" class="border rounded p-2" style="min-height: 200px; max-height: 300px; overflow-y: auto;">
+                      <!-- Phases will be populated here -->
+                    </div>
+                  </div>
+                  
+                  <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-success">
+                      <i class="fas fa-save me-1"></i>Save List
+                    </button>
+                    <button type="button" id="deletePhaseListBtn" class="btn btn-danger" style="display: none;">
+                      <i class="fas fa-trash me-1"></i>Delete List
+                    </button>
+                    <button type="button" id="cancelPhaseListBtn" class="btn btn-secondary">
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              </div>
+              
+              <div id="phaseListPlaceholder" class="text-center text-muted py-5">
+                <i class="fas fa-layer-group fa-3x mb-3 opacity-50"></i>
+                <p>Select a phase list to edit, or create a new one.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Todo List Modal -->
+  <div class="modal fade" id="todoListModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <i class="fas fa-list-check me-2"></i>Todo List
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Todo Form -->
+          <div class="todo-form mb-4">
+            <div class="input-group mb-2">
+              <input type="text" id="modalTodoTitleInput" class="form-control" placeholder="Add a new todo..." maxlength="100">
+              <button class="btn btn-primary" type="button" id="modalTodoAddBtn">
+                <i class="fas fa-plus"></i>
+              </button>
+            </div>
+            <div id="modalTodoDetailsInput" class="todo-details" style="display: none;">
+              <textarea class="form-control" placeholder="Optional details..." rows="2" maxlength="300"></textarea>
+              <div class="mt-2 d-flex justify-content-end gap-2">
+                <button class="btn btn-sm btn-outline-secondary" id="modalCancelTodoDetails">Cancel</button>
+                <button class="btn btn-sm btn-success" id="modalSubmitTodoWithDetails">Add Todo</button>
+              </div>
+            </div>
+            <small class="text-muted">Press Enter to add quickly, or click + for details</small>
+          </div>
+          
+          <!-- Todo List Controls -->
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h6 class="mb-0">Your Todos</h6>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="modalShowCompletedTodos">
+              <label class="form-check-label" for="modalShowCompletedTodos">
+                Show completed
+              </label>
+            </div>
+          </div>
+          
+          <!-- Todo List Container -->
+          <div id="modalTodosList" style="max-height: 400px; overflow-y: auto;">
+            <!-- Todos will be populated here -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Task Details Modal -->
   <div class="modal fade" id="taskDetailsModal" tabindex="-1">
     <div class="modal-dialog modal-lg">
@@ -2958,6 +3414,27 @@
             </div>
             
             <hr>
+            
+            <div class="row">
+              <div class="col-6">
+                <div class="mb-3">
+                  <label for="taskDetailsProject" class="form-label">Project</label>
+                  <select class="form-select" id="taskDetailsProject">
+                    <option value="">No Project (AdHoc)</option>
+                    <!-- Projects will be populated here -->
+                  </select>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="mb-3">
+                  <label for="taskDetailsPhase" class="form-label">Phase</label>
+                  <select class="form-select" id="taskDetailsPhase">
+                    <option value="">No Phase</option>
+                    <!-- Phases will be populated here -->
+                  </select>
+                </div>
+              </div>
+            </div>
             
             <div class="mb-3">
               <label class="form-label">Category Lists</label>
@@ -3234,7 +3711,14 @@
     let currentView = 'board';
     let monthOffset = 0; // Months from current month
 
-    const dbPromise = openDB('TaskTimeTracker', 8, {
+    // Calendar Progress Bar Configuration
+    const CALENDAR_CONFIG = {
+      TASK_BAR_HEIGHT: 14, // pixels - easily adjustable
+      TASK_BAR_MIN_HEIGHT: 10, // minimum height for very busy days
+      MAX_BARS_BEFORE_SHRINK: 5 // shrink bars if more than this many
+    };
+
+    const dbPromise = openDB('TaskTimeTracker', 10, {
       upgrade(db, oldVersion) {
         console.log('Upgrading database from version', oldVersion);
         if (oldVersion < 1) {
@@ -3284,8 +3768,57 @@
             remainingHoursStore.createIndex('timestamp', 'timestamp');
           }
         }
+        if (oldVersion < 9) {
+          // Add projects table for task organization
+          if (!db.objectStoreNames.contains('projects')) {
+            const projectStore = db.createObjectStore('projects', { keyPath: 'id', autoIncrement: true });
+            projectStore.createIndex('name', 'name');
+            projectStore.createIndex('status', 'status');
+          }
+          // Add phases table for task organization (will be replaced in v10)
+          if (!db.objectStoreNames.contains('phases')) {
+            const phaseStore = db.createObjectStore('phases', { keyPath: 'id', autoIncrement: true });
+            phaseStore.createIndex('name', 'name');
+          }
+        }
+        if (oldVersion < 10) {
+          // Replace phases table with phaseLists (like categoryLists)
+          if (db.objectStoreNames.contains('phases')) {
+            db.deleteObjectStore('phases');
+          }
+          // Add phaseLists table for phase organization
+          if (!db.objectStoreNames.contains('phaseLists')) {
+            const phaseListStore = db.createObjectStore('phaseLists', { keyPath: 'id', autoIncrement: true });
+            phaseListStore.createIndex('slug', 'slug', { unique: true });
+            phaseListStore.createIndex('title', 'title');
+          }
+        }
       }
     });
+
+    // Utility function to get database statistics (useful for verifying import/export)
+    async function getDatabaseStats() {
+      const db = await dbPromise;
+      const tableNames = ['tasks', 'timeLogs', 'todos', 'accomplishments', 'workSessions', 'categoryLists', 'remainingHoursHistory', 'projects', 'phaseLists'];
+      const stats = { version: 10, tables: {} };
+      
+      for (const tableName of tableNames) {
+        try {
+          const tx = db.transaction([tableName], 'readonly');
+          const store = tx.objectStore(tableName);
+          const count = await store.count();
+          stats.tables[tableName] = count;
+        } catch (err) {
+          console.warn(`Could not get count for ${tableName}:`, err);
+          stats.tables[tableName] = 0;
+        }
+      }
+      
+      return stats;
+    }
+
+    // Make getDatabaseStats available globally for testing
+    window.getDatabaseStats = getDatabaseStats;
 
     // Migrate existing tasks to have remaining hours tracking
     async function migrateTasksForRemainingHours() {
@@ -3613,7 +4146,7 @@
               task.statusHistory = [...currentTask.statusHistory, {
                 status: task.status,
                 timestamp: new Date().toISOString(),
-                note: `Changed from ${currentTask.status} to ${task.status}`
+                note: `${currentTask.status} => ${task.status}`
               }];
               
               console.log('Status changed - updated history:', task.statusHistory);
@@ -3921,15 +4454,41 @@
       return calendar;
     }
 
+    // Generate project/phase badges HTML for task cards
+    async function generateTaskBadgesHTML(task) {
+      let badgesHTML = '';
+      
+      // Add project badge
+      if (task.projectId) {
+        const projectInfo = await getProjectDisplayInfo(task.projectId);
+        badgesHTML += `<span class="project-badge" title="${projectInfo.name}">📁 ${projectInfo.shortName}</span>`;
+      }
+      
+      // Add phase badge  
+      if (task.phaseKey) {
+        const phaseInfo = await getPhaseDisplayInfo(task.phaseKey);
+        badgesHTML += `<span class="phase-badge" title="${phaseInfo.listTitle}: ${phaseInfo.itemTitle}">🔄 ${phaseInfo.shortTitle}</span>`;
+      }
+      
+      return badgesHTML ? `<div class="badge-container">${badgesHTML}</div>` : '';
+    }
+
     async function renderTasks(view = 'board') {
       console.log('Rendering tasks for view:', view);
       currentView = view;
       const { startDate, endDate } = getDateRange(view);
       
-      // Use calendar-specific filters for month view, no filters for other views
+      // Use view-specific filters plus global filters
       let statusFilter = '';
       let urgencyFilter = '';
+      let projectFilter = '';
+      let phaseFilter = '';
       
+      // Get global project/phase filters
+      projectFilter = localStorage.getItem('globalProjectFilter') || '';
+      phaseFilter = localStorage.getItem('globalPhaseFilter') || '';
+      
+      // Get view-specific status/urgency filters for calendar
       if (view === 'month') {
         const statusElement = document.getElementById('calendarStatusFilter');
         const urgencyElement = document.getElementById('calendarUrgencyFilter');
@@ -3938,7 +4497,16 @@
       }
       
       const includeAll = view === 'all' || view === 'month' || view === 'board'; // Include all tasks for month and board views to show completed/abandoned on completion dates
-      const tasks = await getTasks({ status: statusFilter, urgency: urgencyFilter }, includeAll);
+      let tasks = await getTasks({ status: statusFilter, urgency: urgencyFilter }, includeAll);
+      
+      // Apply global project and phase filters
+      if (projectFilter) {
+        tasks = tasks.filter(task => task.projectId && task.projectId.toString() === projectFilter);
+      }
+      if (phaseFilter) {
+        tasks = tasks.filter(task => task.phaseKey === phaseFilter);
+      }
+      
       let sortBy = sessionStorage.getItem('sortBy') || 'dueOn';
       let sortOrder = sessionStorage.getItem('sortOrder') || 'asc';
 
@@ -4082,14 +4650,16 @@
               card.classList.add('overdue');
             }
             
-            // Add status indicator for Done and Blocked/Backburner lanes
-            const needsStatusIndicator = ['done', 'blocked'].includes(lane.id);
-            const statusIndicator = needsStatusIndicator ? `
+            // Add status indicator for all lanes
+            const statusIndicator = `
               <div class="card-status-indicator status-${task.status.toLowerCase()}" title="Status: ${task.status}">
                 <i class="fas fa-${getStatusIcon(task.status)}"></i>
                 <span>${task.status}</span>
               </div>
-            ` : '';
+            `;
+            
+            // Generate project/phase badges
+            const badgesHTML = await generateTaskBadgesHTML(task);
             
             card.innerHTML = `
               <div class="card-header">
@@ -4098,17 +4668,23 @@
                   <i class="fas fa-edit"></i>
                 </button>
               </div>
-              ${statusIndicator}
+              ${badgesHTML}
               <div class="card-meta">
                 <div class="card-due-date ${isOverdue ? 'overdue' : isDueSoon ? 'due-soon' : ''}">
                   <i class="fas fa-calendar"></i>
                   ${new Date(task.dueOn).toLocaleDateString()}
                 </div>
-                ${task.notes && task.notes.trim() ? `
-                  <div class="card-notes-indicator" title="Has notes">
-                    <i class="fas fa-sticky-note"></i>
+                <div class="card-meta-right">
+                  <div class="card-status-indicator status-${task.status.toLowerCase()}" title="Status: ${task.status}">
+                    <i class="fas fa-${getStatusIcon(task.status)}"></i>
+                    <span>${task.status}</span>
                   </div>
-                ` : ''}
+                  ${task.notes && task.notes.trim() ? `
+                    <div class="card-notes-indicator" title="Has notes">
+                      <i class="fas fa-sticky-note"></i>
+                    </div>
+                  ` : ''}
+                </div>
               </div>
               <div class="card-time-info">
                 <div class="card-hours">
@@ -4195,7 +4771,7 @@
                     <div class="todo-form mb-3">
                       <div class="input-group mb-2">
                         <input type="text" id="todoTitleInput" class="form-control" placeholder="Add a todo..." maxlength="100">
-                        <button class="btn btn-primary" type="button" onclick="submitTodo()">
+                        <button class="btn btn-primary" type="button">
                           <i class="fas fa-plus"></i>
                         </button>
                       </div>
@@ -4485,7 +5061,7 @@
           console.error('Error loading calendar data:', err);
         }
         
-        // Build the new split-pane calendar
+        // Build the new split-pane calendar with async day content
         let calendarTable = '<div class="calendar-table-container"><table class="table calendar-table"><thead><tr><th class="week-selector-header" title="Select Week"><i class="fas fa-calendar-week"></i></th>';
         ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].forEach(day => calendarTable += `<th>${day}</th>`);
         calendarTable += '</tr></thead><tbody>';
@@ -4500,39 +5076,54 @@
           
           // Ensure we only process exactly 7 days per week
           const weekDays = week.slice(0, 7);
-          for (const day of weekDays) {
-            const dateStr = day ? `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}` : '';
-            const dayStats = dailyStats[dateStr] || { tasks: [], totalHours: 0, todos: 0, accomplishments: 0 };
+          
+          // Build all day contents for this week in parallel
+          const dayPromises = weekDays.map(async (day) => {
+            if (!day) return { day: null, content: '' };
+            
+            const dateStr = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+            const dayStats = dailyStats[dateStr] || { tasks: [], totalHours: 0, todos: 0, accomplishments: 0, workSession: null };
             const isToday = dateStr === new Date().toISOString().split('T')[0];
             
-            calendarTable += `<td class="calendar-day ${isToday ? 'today' : ''}" ${dateStr ? `data-date="${dateStr}"` : ''}>`;
+            const dueBadge = await buildDueDateBadge(dayStats.tasks, dateStr);
+            const timeIndicators = await buildTimeIndicators(dayStats.tasks, dateStr, dayStats.workSession);
+            const progressBars = await buildProgressBars(dayStats.tasks, dateStr);
             
-            if (day) {
-              // Enhanced calendar day structure
-              const workSummary = buildWorkSummary(dayStats, dateStr);
-              const statusBadges = buildStatusBadges(dayStats.tasks);
-              const taskBars = buildTaskBars(dayStats.tasks);
-              
-              calendarTable += `
+            return {
+              day,
+              dateStr,
+              isToday,
+              content: `
                 <div class="calendar-day-header">
-                  <span class="calendar-day-number">${day}</span>
-                  <div class="day-work-summary">
-                    ${workSummary}
+                  <div class="day-number-row">
+                    <span class="calendar-day-number">${day}</span>
+                    ${dueBadge}
                   </div>
+                  ${timeIndicators}
                 </div>
                 <div class="calendar-day-content">
-                  <div class="status-badges">
-                    ${statusBadges}
-                  </div>
-                  <div class="task-bars">
-                    ${taskBars}
+                  <div class="calendar-progress-bars">
+                    ${progressBars}
                   </div>
                 </div>
-              `;
+              `
+            };
+          });
+          
+          // Wait for all days in this week to be processed
+          const dayContents = await Promise.all(dayPromises);
+          
+          // Add each day to the calendar table
+          for (const dayData of dayContents) {
+            if (dayData.day) {
+              calendarTable += `<td class="calendar-day ${dayData.isToday ? 'today' : ''}" data-date="${dayData.dateStr}">`;
+              calendarTable += dayData.content;
+              calendarTable += '</td>';
+            } else {
+              calendarTable += '<td class="calendar-day"></td>';
             }
-            
-            calendarTable += '</td>';
           }
+          
           calendarTable += '</tr>';
           weekIndex++;
         }
@@ -4596,6 +5187,7 @@
         // Initialize new month view functionality
         initializeMonthSplitView(dailyStats, year, month);
         initializeCalendarControls();
+        initializeGlobalFilters();
       } else if (view === 'all') {
         let table = `
           <table class="table table-striped">
@@ -4894,46 +5486,198 @@
     }
 
     async function exportData() {
-      console.log('Exporting data');
+      console.log('Exporting all application data');
       try {
         const db = await dbPromise;
-        const tasks = await db.getAll('tasks');
-        const timeLogs = await db.getAll('timeLogs');
-        const data = { tasks, timeLogs };
-        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        
+        // Export all database tables
+        const exportData = {
+          version: 10, // Current database version
+          exportDate: new Date().toISOString(),
+          appVersion: '1.0.0', // Add app version for compatibility
+          data: {
+            tasks: await db.getAll('tasks'),
+            timeLogs: await db.getAll('timeLogs'),
+            todos: await db.getAll('todos'),
+            accomplishments: await db.getAll('accomplishments'),
+            workSessions: await db.getAll('workSessions'),
+            categoryLists: await db.getAll('categoryLists'),
+            remainingHoursHistory: await db.getAll('remainingHoursHistory'),
+            projects: await db.getAll('projects'),
+            phaseLists: await db.getAll('phaseLists')
+          },
+          settings: {
+            // Export relevant localStorage settings
+            globalProjectFilter: localStorage.getItem('globalProjectFilter'),
+            globalPhaseFilter: localStorage.getItem('globalPhaseFilter'),
+            calendarStatusFilter: localStorage.getItem('calendarStatusFilter'),
+            calendarUrgencyFilter: localStorage.getItem('calendarUrgencyFilter'),
+            sortBy: sessionStorage.getItem('sortBy'),
+            sortOrder: sessionStorage.getItem('sortOrder')
+          }
+        };
+        
+        // Create filename with timestamp
+        const now = new Date();
+        const timestamp = now.toISOString().slice(0, 19).replace(/[:.]/g, '-');
+        const filename = `task-tracker-backup-${timestamp}.json`;
+        
+        // Use showSaveFilePicker if available (modern browsers)
+        if (window.showSaveFilePicker) {
+          try {
+            const fileHandle = await window.showSaveFilePicker({
+              suggestedName: filename,
+              types: [{
+                description: 'Task Tracker Backup',
+                accept: { 'application/json': ['.json'] }
+              }]
+            });
+            
+            const writable = await fileHandle.createWritable();
+            await writable.write(JSON.stringify(exportData, null, 2));
+            await writable.close();
+            
+            showToast('Data exported successfully!', 'success');
+            console.log('Data exported to user-selected location');
+            return;
+          } catch (err) {
+            if (err.name !== 'AbortError') {
+              console.warn('File picker failed, falling back to download:', err);
+            } else {
+              console.log('Export cancelled by user');
+              return;
+            }
+          }
+        }
+        
+        // Fallback: traditional download
+        const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'task-time-data.json';
+        a.download = filename;
+        document.body.appendChild(a);
         a.click();
+        document.body.removeChild(a);
         URL.revokeObjectURL(url);
+        
+        showToast('Data exported successfully!', 'success');
         console.log('Data exported successfully');
+        
       } catch (err) {
         console.error('Error exporting data:', err);
-        alert('Failed to export data: ' + err.message);
+        showToast('Failed to export data: ' + err.message, 'error');
       }
     }
 
     async function importData(file) {
-      console.log('Importing data from file');
+      console.log('Importing comprehensive application data from file');
       const reader = new FileReader();
       reader.onload = async (e) => {
         try {
-          const data = JSON.parse(e.target.result);
+          const importedData = JSON.parse(e.target.result);
+          
+          // Check if this is a new format export with version info
+          let data, settings;
+          if (importedData.version && importedData.data) {
+            // New comprehensive format
+            data = importedData.data;
+            settings = importedData.settings || {};
+            
+            console.log(`Importing data from version ${importedData.version}, exported on ${importedData.exportDate}`);
+            
+            // Version compatibility check
+            if (importedData.version > 10) {
+              const proceed = confirm('This backup was created with a newer version of the app. Some data might not import correctly. Continue anyway?');
+              if (!proceed) return;
+            }
+            
+            // Warn about data replacement for comprehensive imports
+            const hasConstraintTables = (data.categoryLists && data.categoryLists.length > 0) || (data.phaseLists && data.phaseLists.length > 0);
+            if (hasConstraintTables) {
+              const proceed = confirm('This will replace your existing Category Lists and Phase Lists. Your tasks and other data will be merged. Continue?');
+              if (!proceed) return;
+            }
+          } else {
+            // Legacy format (just tasks and timeLogs)
+            data = importedData;
+            settings = {};
+            console.log('Importing legacy format data');
+          }
+          
           const db = await dbPromise;
-          const tx = db.transaction(['tasks', 'timeLogs'], 'readwrite');
-          for (const task of data.tasks) {
-            await tx.objectStore('tasks').put(task);
+          
+          // Import all available data tables with constraint handling
+          const tableNames = ['tasks', 'timeLogs', 'todos', 'accomplishments', 'workSessions', 'categoryLists', 'remainingHoursHistory', 'projects', 'phaseLists'];
+          
+          let importedTables = [];
+          
+          for (const tableName of tableNames) {
+            if (data[tableName] && Array.isArray(data[tableName])) {
+              const tx = db.transaction([tableName], 'readwrite');
+              const store = tx.objectStore(tableName);
+              
+              // For tables with unique constraints, use put() which will update existing records
+              for (const item of data[tableName]) {
+                try {
+                  await store.put(item);
+                } catch (err) {
+                  if (err.name === 'ConstraintError') {
+                    console.warn(`Skipping duplicate item in ${tableName}:`, item);
+                    continue;
+                  }
+                  throw err;
+                }
+              }
+              
+              await tx.done;
+              importedTables.push(`${tableName} (${data[tableName].length} items)`);
+              console.log(`Imported ${data[tableName].length} ${tableName}`);
+            }
           }
-          for (const log of data.timeLogs) {
-            await tx.objectStore('timeLogs').put(log);
+          
+          // Restore settings
+          if (settings.globalProjectFilter !== undefined) {
+            localStorage.setItem('globalProjectFilter', settings.globalProjectFilter || '');
           }
-          await tx.done;
-          console.log('Data imported successfully');
-          renderTasks(document.querySelector('.nav-link.active').id.replace('Tab', ''));
+          if (settings.globalPhaseFilter !== undefined) {
+            localStorage.setItem('globalPhaseFilter', settings.globalPhaseFilter || '');
+          }
+          if (settings.calendarStatusFilter !== undefined) {
+            localStorage.setItem('calendarStatusFilter', settings.calendarStatusFilter || '');
+          }
+          if (settings.calendarUrgencyFilter !== undefined) {
+            localStorage.setItem('calendarUrgencyFilter', settings.calendarUrgencyFilter || '');
+          }
+          if (settings.sortBy !== undefined) {
+            sessionStorage.setItem('sortBy', settings.sortBy || 'dueOn');
+          }
+          if (settings.sortOrder !== undefined) {
+            sessionStorage.setItem('sortOrder', settings.sortOrder || 'asc');
+          }
+          
+          console.log('Data imported successfully:', importedTables.join(', '));
+          
+          // Refresh current view and restore global filters
+          const currentView = document.querySelector('.nav-link.active');
+          if (currentView) {
+            const viewName = currentView.id.replace('Tab', '');
+            renderTasks(viewName);
+          }
+          
+          // Refresh global filters
+          if (typeof restoreGlobalFilters === 'function') {
+            restoreGlobalFilters();
+          }
+          if (typeof populateGlobalFilters === 'function') {
+            populateGlobalFilters();
+          }
+          
+          showToast(`Import successful! Imported: ${importedTables.join(', ')}`, 'success');
+          
         } catch (err) {
           console.error('Error importing data:', err);
-          alert('Error importing data: ' + err.message);
+          showToast('Error importing data: ' + err.message, 'error');
         }
       };
       reader.readAsText(file);
@@ -5195,7 +5939,7 @@
         if (categoryTitle) {
           categories.push({
             title: categoryTitle,
-            slug: generateSlug(categoryTitle)
+            slug: `${generateSlug(title)}.${generateSlug(categoryTitle)}`
           });
         }
       }
@@ -5217,6 +5961,404 @@
         loadCategoryListsPanel();
       } catch (err) {
         // Error handling is done in saveCategoryList function
+      }
+    }
+
+    // === PROJECTS MANAGER ===
+
+    let currentProject = null;
+
+    // Initialize projects modal
+    function initializeProjectsModal() {
+      const projectsModal = document.getElementById('projectsModal');
+      
+      loadProjectsPanel();
+
+      // New project button
+      document.getElementById('newProjectBtn').addEventListener('click', () => {
+        showProjectEditor();
+      });
+
+      // Form submission
+      document.getElementById('projectForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        await saveProjectForm();
+      });
+
+      // Cancel button
+      document.getElementById('cancelProjectBtn').addEventListener('click', () => {
+        hideProjectEditor();
+      });
+
+      // Delete button
+      document.getElementById('deleteProjectBtn').addEventListener('click', async () => {
+        if (currentProject) {
+          showDeleteConfirmation(
+            'Delete Project',
+            `Are you sure you want to delete "${currentProject.name}"?`,
+            'This will permanently delete the project. Tasks linked to this project will become unassigned.',
+            async () => {
+              if (await deleteProject(currentProject.id)) {
+                hideProjectEditor();
+                loadProjectsPanel();
+              }
+            }
+          );
+        }
+      });
+
+      // Add Bootstrap modal event listeners
+      projectsModal.addEventListener('show.bs.modal', function () {
+        this.removeAttribute('aria-hidden');
+      });
+
+      projectsModal.addEventListener('hide.bs.modal', function () {
+        const focusedElement = this.querySelector(':focus');
+        if (focusedElement) {
+          focusedElement.blur();
+        }
+      });
+    }
+
+    // Load projects panel
+    async function loadProjectsPanel() {
+      const container = document.getElementById('projectsContainer');
+      const projects = await getProjects();
+
+      if (projects.length === 0) {
+        container.innerHTML = `
+          <div class="text-muted text-center py-4">
+            <i class="fas fa-project-diagram fa-2x mb-2 opacity-50"></i>
+            <p class="small mb-0">No projects yet.<br>Create your first project!</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = projects.map(project => `
+        <button class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                data-project-id="${project.id}">
+          <div>
+            <div class="fw-semibold">${project.name}</div>
+            <small class="text-muted">Status: ${project.status}</small>
+          </div>
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      `).join('');
+
+      // Add click handlers
+      container.querySelectorAll('[data-project-id]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const projectId = parseInt(btn.dataset.projectId);
+          const project = projects.find(p => p.id === projectId);
+          if (project) {
+            showProjectEditor(project);
+          }
+        });
+      });
+    }
+
+    // Show project editor
+    async function showProjectEditor(project = null) {
+      currentProject = project;
+      
+      document.getElementById('projectPlaceholder').style.display = 'none';
+      document.getElementById('projectEditor').style.display = 'block';
+
+      // Populate phase list dropdown
+      await populatePhaseListDropdown('projectPhaseList', project?.phaseListId);
+
+      if (project) {
+        // Edit mode
+        document.getElementById('projectName').value = project.name;
+        document.getElementById('projectDescription').value = project.description || '';
+        document.getElementById('projectStatus').value = project.status || 'Ready';
+        document.getElementById('deleteProjectBtn').style.display = 'inline-block';
+      } else {
+        // New mode
+        document.getElementById('projectName').value = '';
+        document.getElementById('projectDescription').value = '';
+        document.getElementById('projectStatus').value = 'Ready';
+        document.getElementById('deleteProjectBtn').style.display = 'none';
+      }
+    }
+
+    // Hide project editor
+    function hideProjectEditor() {
+      currentProject = null;
+      document.getElementById('projectEditor').style.display = 'none';
+      document.getElementById('projectPlaceholder').style.display = 'block';
+      document.getElementById('projectForm').reset();
+    }
+
+    // Save project form
+    async function saveProjectForm() {
+      const name = document.getElementById('projectName').value.trim();
+      const description = document.getElementById('projectDescription').value.trim();
+      const status = document.getElementById('projectStatus').value;
+
+      if (!name) {
+        showToast('Project name is required', 'error');
+        return;
+      }
+
+      const projectData = {
+        name,
+        description,
+        status,
+        phaseListId: document.getElementById('projectPhaseList').value || null
+      };
+
+      if (currentProject) {
+        projectData.id = currentProject.id;
+      }
+
+      try {
+        await saveProject(projectData);
+        hideProjectEditor();
+        loadProjectsPanel();
+      } catch (err) {
+        // Error handling is done in saveProject function
+      }
+    }
+
+    // === PHASE LISTS MANAGER ===
+
+    let currentPhaseList = null;
+
+    // Initialize phase lists modal
+    function initializePhaseListsModal() {
+      const phaseListsModal = document.getElementById('phaseListsModal');
+      
+      loadPhaseListsPanel();
+
+      // New list button
+      document.getElementById('newPhaseListBtn').addEventListener('click', () => {
+        showPhaseListEditor();
+      });
+
+      // Form submission
+      document.getElementById('phaseListForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        await savePhaseListForm();
+      });
+
+      // Cancel button
+      document.getElementById('cancelPhaseListBtn').addEventListener('click', () => {
+        hidePhaseListEditor();
+      });
+
+      // Delete button
+      document.getElementById('deletePhaseListBtn').addEventListener('click', async () => {
+        if (currentPhaseList) {
+          showDeleteConfirmation(
+            'Delete Phase List',
+            `Are you sure you want to delete "${currentPhaseList.title}"?`,
+            'This will permanently delete the phase list and all its phases.',
+            async () => {
+              if (await deletePhaseList(currentPhaseList.id)) {
+                hidePhaseListEditor();
+                loadPhaseListsPanel();
+              }
+            }
+          );
+        }
+      });
+
+      // Add phase button
+      document.getElementById('addPhaseBtn').addEventListener('click', () => {
+        addPhaseItem();
+      });
+
+      // Auto-generate slug as user types
+      document.getElementById('phaseListTitle').addEventListener('input', (e) => {
+        const slug = generateSlug(e.target.value);
+        document.getElementById('phaseListSlugPreview').textContent = slug || '(auto-generated)';
+      });
+
+      // Add Bootstrap modal event listeners
+      phaseListsModal.addEventListener('show.bs.modal', function () {
+        this.removeAttribute('aria-hidden');
+      });
+
+      phaseListsModal.addEventListener('hide.bs.modal', function () {
+        const focusedElement = this.querySelector(':focus');
+        if (focusedElement) {
+          focusedElement.blur();
+        }
+      });
+    }
+
+    // Load phase lists panel
+    async function loadPhaseListsPanel() {
+      const container = document.getElementById('phaseListsContainer');
+      const lists = await getPhaseLists();
+
+      if (lists.length === 0) {
+        container.innerHTML = `
+          <div class="text-muted text-center py-4">
+            <i class="fas fa-layer-group fa-2x mb-2 opacity-50"></i>
+            <p class="small mb-0">No phase lists yet.<br>Create your first list!</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = lists.map(list => `
+        <button class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                data-list-id="${list.id}">
+          <div>
+            <div class="fw-semibold">${list.title}</div>
+            <small class="text-muted">${list.phases?.length || 0} phases</small>
+          </div>
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      `).join('');
+
+      // Add click handlers
+      container.querySelectorAll('[data-list-id]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const listId = parseInt(btn.dataset.listId);
+          const list = lists.find(l => l.id === listId);
+          if (list) {
+            showPhaseListEditor(list);
+          }
+        });
+      });
+    }
+
+    // Show phase list editor
+    function showPhaseListEditor(phaseList = null) {
+      currentPhaseList = phaseList;
+      
+      document.getElementById('phaseListPlaceholder').style.display = 'none';
+      document.getElementById('phaseListEditor').style.display = 'block';
+
+      if (phaseList) {
+        // Edit mode
+        document.getElementById('phaseListTitle').value = phaseList.title;
+        document.getElementById('phaseListDescription').value = phaseList.description || '';
+        document.getElementById('phaseListSlugPreview').textContent = phaseList.slug;
+        document.getElementById('deletePhaseListBtn').style.display = 'inline-block';
+        
+        renderPhasesContainer(phaseList.phases || []);
+      } else {
+        // New mode
+        document.getElementById('phaseListTitle').value = '';
+        document.getElementById('phaseListDescription').value = '';
+        document.getElementById('phaseListSlugPreview').textContent = '(auto-generated)';
+        document.getElementById('deletePhaseListBtn').style.display = 'none';
+        
+        renderPhasesContainer([]);
+      }
+    }
+
+    // Hide phase list editor
+    function hidePhaseListEditor() {
+      currentPhaseList = null;
+      document.getElementById('phaseListEditor').style.display = 'none';
+      document.getElementById('phaseListPlaceholder').style.display = 'block';
+      document.getElementById('phaseListForm').reset();
+    }
+
+    // Render phases container
+    function renderPhasesContainer(phases) {
+      const container = document.getElementById('phasesContainer');
+      
+      if (phases.length === 0) {
+        container.innerHTML = `
+          <div class="text-muted text-center py-3">
+            <i class="fas fa-layer-group fa-2x mb-2 opacity-50"></i>
+            <p class="small mb-0">No phases yet.<br>Click "Add Phase" to get started!</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = phases.map((phase, index) => `
+        <div class="d-flex align-items-center mb-2 phase-item">
+          <input type="text" class="form-control phase-title" value="${phase.title}" placeholder="Phase name">
+          <small class="text-muted ms-2 me-2">Slug: <span class="phase-slug">${phase.slug || '(auto-generated)'}</span></small>
+          <button type="button" class="btn btn-outline-danger btn-sm ms-2" onclick="removePhaseItem(${index})">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      `).join('');
+
+      // Add event listeners to phase title inputs
+      container.querySelectorAll('.phase-title').forEach((input, index) => {
+        input.addEventListener('input', (e) => {
+          const slugSpan = e.target.parentElement.querySelector('.phase-slug');
+          const slug = generateSlug(e.target.value);
+          slugSpan.textContent = slug || '(auto-generated)';
+        });
+      });
+    }
+
+    // Add phase item
+    function addPhaseItem() {
+      const container = document.getElementById('phasesContainer');
+      const phases = getCurrentPhases();
+      phases.push({ title: '', slug: '' });
+      renderPhasesContainer(phases);
+    }
+
+    // Remove phase item
+    window.removePhaseItem = function(index) {
+      const phases = getCurrentPhases();
+      phases.splice(index, 1);
+      renderPhasesContainer(phases);
+    }
+
+    // Get current phases from form  
+    function getCurrentPhases() {
+      const container = document.getElementById('phasesContainer');
+      const phaseInputs = container.querySelectorAll('.phase-title');
+      const listTitle = document.getElementById('phaseListTitle').value.trim();
+      const listSlug = generateSlug(listTitle);
+      
+      return Array.from(phaseInputs).map(input => ({
+        title: input.value.trim(),
+        slug: `${listSlug}.${generateSlug(input.value.trim())}`
+      })).filter(phase => phase.title);
+    }
+
+    // Save phase list form
+    async function savePhaseListForm() {
+      const title = document.getElementById('phaseListTitle').value.trim();
+      const description = document.getElementById('phaseListDescription').value.trim();
+      const phases = getCurrentPhases();
+
+      if (!title) {
+        showToast('Phase list title is required', 'error');
+        return;
+      }
+
+      // Validate phase titles
+      for (const phase of phases) {
+        if (!phase.title) {
+          showToast('All phases must have a title', 'error');
+          return;
+        }
+      }
+
+      const phaseListData = {
+        title,
+        description,
+        phases
+      };
+
+      if (currentPhaseList) {
+        phaseListData.id = currentPhaseList.id;
+        phaseListData.slug = currentPhaseList.slug; // Keep existing slug
+      }
+
+      try {
+        await savePhaseList(phaseListData);
+        hidePhaseListEditor();
+        loadPhaseListsPanel();
+      } catch (err) {
+        // Error handling is done in savePhaseList function
       }
     }
 
@@ -5270,6 +6412,102 @@
       const container = document.getElementById(containerId);
       const checkboxes = container.querySelectorAll('.category-list-checkbox:checked');
       return Array.from(checkboxes).map(cb => cb.value);
+    }
+
+    // Populate project dropdown
+    async function populateProjectDropdown(selectId, selectedProjectId = null) {
+      const select = document.getElementById(selectId);
+      const projects = await getProjects();
+      
+      // Clear existing options except the first (No Project)
+      select.innerHTML = '<option value="">No Project (AdHoc)</option>';
+      
+      // Add project options
+      projects.forEach(project => {
+        const option = document.createElement('option');
+        option.value = project.id;
+        option.textContent = project.name;
+        if (selectedProjectId && project.id == selectedProjectId) {
+          option.selected = true;
+        }
+        select.appendChild(option);
+      });
+    }
+
+    // Populate phase dropdown based on project (new phase lists system)
+    async function populatePhaseDropdown(selectId, selectedPhaseKey = null, projectId = null) {
+      const select = document.getElementById(selectId);
+      
+      // Clear existing options
+      select.innerHTML = '<option value="">No Phase</option>';
+      
+      let availablePhases = [];
+      
+      if (projectId) {
+        // Get project to find its associated phase list
+        const projects = await getProjects();
+        const project = projects.find(p => p.id == projectId);
+        
+        if (project && project.phaseListId) {
+          // Get the phase list associated with this project
+          const phaseLists = await getPhaseLists();
+          const phaseList = phaseLists.find(pl => pl.id == project.phaseListId);
+          
+          if (phaseList && phaseList.phases) {
+            // Add phases from the project's phase list
+            availablePhases = phaseList.phases.map(phase => ({
+              key: generatePhaseKey(phaseList.slug, phase.slug),
+              title: phase.title,
+              listTitle: phaseList.title
+            }));
+          }
+        }
+      } else {
+        // No project selected - show all phases from all lists
+        const phaseLists = await getPhaseLists();
+        for (const phaseList of phaseLists) {
+          if (phaseList.phases) {
+            for (const phase of phaseList.phases) {
+              availablePhases.push({
+                key: generatePhaseKey(phaseList.slug, phase.slug),
+                title: phase.title,
+                listTitle: phaseList.title
+              });
+            }
+          }
+        }
+      }
+      
+      // Add phase options
+      availablePhases.forEach(phase => {
+        const option = document.createElement('option');
+        option.value = phase.key;
+        option.textContent = projectId ? phase.title : `${phase.listTitle}: ${phase.title}`;
+        if (selectedPhaseKey && phase.key === selectedPhaseKey) {
+          option.selected = true;
+        }
+        select.appendChild(option);
+      });
+    }
+
+    // Populate phase list dropdown (for projects)
+    async function populatePhaseListDropdown(selectId, selectedPhaseListId = null) {
+      const select = document.getElementById(selectId);
+      const phaseLists = await getPhaseLists();
+      
+      // Clear existing options except the first (No Phase List)
+      select.innerHTML = '<option value="">No Phase List</option>';
+      
+      // Add phase list options
+      phaseLists.forEach(phaseList => {
+        const option = document.createElement('option');
+        option.value = phaseList.id;
+        option.textContent = phaseList.title;
+        if (selectedPhaseListId && phaseList.id == selectedPhaseListId) {
+          option.selected = true;
+        }
+        select.appendChild(option);
+      });
     }
 
     // Update task category lists field
@@ -5506,6 +6744,16 @@
         document.getElementById('taskDetailsImportance').value = task.importance || 'Low';
         document.getElementById('taskDetailsEstimate').value = task.estimate || 0;
 
+        // Load project and phase dropdowns
+        await populateProjectDropdown('taskDetailsProject', task.projectId);
+        await populatePhaseDropdown('taskDetailsPhase', task.phaseKey, task.projectId);
+        
+        // Add event listener for project changes to update phase dropdown
+        document.getElementById('taskDetailsProject').addEventListener('change', async function() {
+          const selectedProjectId = this.value;
+          await populatePhaseDropdown('taskDetailsPhase', null, selectedProjectId);
+        });
+
         // Load category lists selector
         await renderCategoryListsSelector('taskDetailsCategoryLists', task.categoryLists || []);
 
@@ -5531,6 +6779,8 @@
           urgency: document.getElementById('taskDetailsUrgency').value,
           importance: document.getElementById('taskDetailsImportance').value,
           estimate: parseFloat(document.getElementById('taskDetailsEstimate').value) || 0,
+          projectId: document.getElementById('taskDetailsProject').value || null,
+          phaseKey: document.getElementById('taskDetailsPhase').value || null,
           categoryLists: getSelectedCategoryLists('taskDetailsCategoryLists')
         };
 
@@ -5945,6 +7195,16 @@
           // Load category lists when expanded form is shown
           await renderCategoryListsSelector('quickTaskCategoryLists', getPersistentCategoryLists());
           
+          // Load project and phase dropdowns
+          await populateProjectDropdown('quickTaskProject');
+          await populatePhaseDropdown('quickTaskPhase');
+          
+          // Add event listener for project changes to update phase dropdown
+          document.getElementById('quickTaskProject').addEventListener('change', async function() {
+            const selectedProjectId = this.value;
+            await populatePhaseDropdown('quickTaskPhase', null, selectedProjectId);
+          });
+          
           // Add event handlers to sync checkbox changes with persistent storage
           const checkboxes = document.querySelectorAll('#quickTaskCategoryLists .category-list-checkbox');
           checkboxes.forEach(checkbox => {
@@ -6006,6 +7266,8 @@
           estimate: parseFloat(document.getElementById('quickTaskEstimate').value) || 0,
           remainingHours: parseFloat(document.getElementById('quickTaskRemaining').value) || 0,
           notes: document.getElementById('quickTaskNotes').value.trim(),
+          projectId: document.getElementById('quickTaskProject').value || null,
+          phaseKey: document.getElementById('quickTaskPhase').value || null,
           categoryLists: getPersistentCategoryLists() // Use persistent storage
         };
         
@@ -6098,9 +7360,14 @@
         
         // Edit task details
         else if (e.target.closest('.edit-task-btn')) {
-          const taskId = parseInt(e.target.closest('.edit-task-btn').dataset.taskId);
-          console.log('Opening task details for task:', taskId);
-          await showTaskDetailsModal(taskId);
+          const editBtn = e.target.closest('.edit-task-btn');
+          // Only handle edit buttons that have data-task-id (not ones with onclick handlers)
+          if (editBtn.dataset.taskId) {
+            const taskId = parseInt(editBtn.dataset.taskId);
+            console.log('Opening task details for task:', taskId);
+            await showTaskDetailsModal(taskId);
+          }
+          // If no data-task-id, let the onclick handler in HTML take over
         }
         
         // Work on task
@@ -6321,13 +7588,47 @@
       });
 
       document.getElementById('exportBtn').addEventListener('click', exportData);
-      document.getElementById('importBtn').addEventListener('click', () => {
+      document.getElementById('importBtn').addEventListener('click', async () => {
         console.log('Import button clicked');
-        document.getElementById('importFile').click();
+        try {
+          // Try modern File System Access API first
+          if ('showOpenFilePicker' in window) {
+            try {
+              const [fileHandle] = await window.showOpenFilePicker({
+                types: [{
+                  description: 'JSON backup files',
+                  accept: {
+                    'application/json': ['.json']
+                  }
+                }],
+                excludeAcceptAllOption: true,
+                multiple: false
+              });
+              
+              const file = await fileHandle.getFile();
+              await importData(file);
+              return;
+            } catch (err) {
+              if (err.name !== 'AbortError') {
+                console.log('File System Access API failed, falling back to input element:', err);
+              } else {
+                return; // User cancelled
+              }
+            }
+          }
+          
+          // Fallback to traditional file input
+          document.getElementById('importFile').click();
+        } catch (err) {
+          console.error('Error in import button handler:', err);
+          showToast('Error opening file picker: ' + err.message, 'error');
+        }
       });
       document.getElementById('importFile').addEventListener('change', (e) => {
         console.log('Import file selected');
-        importData(e.target.files[0]);
+        if (e.target.files[0]) {
+          importData(e.target.files[0]);
+        }
       });
       
       // Tab navigation
@@ -6611,6 +7912,13 @@
       try {
         const db = await dbPromise;
         const todo = await db.get('todos', todoId);
+        
+        // Check if todo exists
+        if (!todo) {
+          console.error('Todo not found:', todoId);
+          return;
+        }
+        
         todo.completed = !todo.completed;
         
         // Set or clear completion timestamp
@@ -6622,6 +7930,12 @@
         
         await db.put('todos', todo);
         await loadTodos();
+        
+        // Also update modal todos if modal is open
+        const modal = document.getElementById('todoListModal');
+        if (modal && modal.classList.contains('show')) {
+          await loadModalTodos();
+        }
       } catch (err) {
         console.error('Error toggling todo:', err);
         alert('Failed to update todo: ' + err.message);
@@ -6659,9 +7973,269 @@
         const db = await dbPromise;
         await db.delete('todos', todoId);
         await loadTodos();
+        
+        // Also update modal todos if modal is open
+        const modal = document.getElementById('todoListModal');
+        if (modal && modal.classList.contains('show')) {
+          await loadModalTodos();
+        }
       } catch (err) {
         console.error('Error deleting todo:', err);
         showErrorToast('Failed to delete todo');
+      }
+    }
+    
+    // === TODO LIST MODAL ===
+    
+    function initializeTodoListModal() {
+      const modalTodoInput = document.getElementById('modalTodoTitleInput');
+      const modalTodoAddBtn = document.getElementById('modalTodoAddBtn');
+      const modalShowCompleted = document.getElementById('modalShowCompletedTodos');
+      const modalCancelDetails = document.getElementById('modalCancelTodoDetails');
+      const modalSubmitWithDetails = document.getElementById('modalSubmitTodoWithDetails');
+      
+      // Input event handlers
+      if (modalTodoInput) {
+        modalTodoInput.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+            if (e.shiftKey) {
+              showModalTodoDetails();
+            } else {
+              if (shouldSubmitModalTodoWithDetails()) {
+                submitModalTodoWithDetails();
+              } else {
+                submitModalTodo();
+              }
+            }
+          }
+        });
+      }
+      
+      // Button event handlers
+      if (modalTodoAddBtn) {
+        modalTodoAddBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const input = document.getElementById('modalTodoTitleInput');
+          if (input.value.trim()) {
+            if (shouldSubmitModalTodoWithDetails()) {
+              submitModalTodoWithDetails();
+            } else {
+              submitModalTodo();
+            }
+          } else {
+            showModalTodoDetails();
+          }
+        });
+      }
+      
+      if (modalShowCompleted) {
+        modalShowCompleted.addEventListener('change', loadModalTodos);
+      }
+      
+      if (modalCancelDetails) {
+        modalCancelDetails.addEventListener('click', cancelModalTodoDetails);
+      }
+      
+      if (modalSubmitWithDetails) {
+        modalSubmitWithDetails.addEventListener('click', submitModalTodoWithDetails);
+      }
+      
+      // Load todos when modal is shown
+      const todoModal = document.getElementById('todoListModal');
+      if (todoModal) {
+        todoModal.addEventListener('show.bs.modal', function () {
+          loadModalTodos();
+          setTimeout(() => modalTodoInput?.focus(), 100);
+        });
+      }
+    }
+    
+    // === CALENDAR PROGRESS BAR UTILITIES ===
+    
+    // Determine urgency and proximity color class
+    function getTaskBarColorClass(task, calendarDate) {
+      const today = new Date().toISOString().split('T')[0];
+      const taskDueDate = task.dueOn;
+      const urgency = task.urgency.toLowerCase();
+      
+      // Calculate days until due
+      const todayMs = new Date(today).getTime();
+      const dueDateMs = new Date(taskDueDate).getTime();
+      const daysUntilDue = Math.ceil((dueDateMs - todayMs) / (1000 * 60 * 60 * 24));
+      
+      let proximity;
+      if (daysUntilDue <= 1) {
+        proximity = 'today-tomorrow';
+      } else if (daysUntilDue <= 7) {
+        proximity = 'this-week';
+      } else {
+        proximity = 'next-week';
+      }
+      
+      return `urgency-${urgency}-${proximity}`;
+    }
+    
+    // Get special CSS classes for task bar
+    function getTaskBarSpecialClasses(task, calendarDate) {
+      const today = new Date().toISOString().split('T')[0];
+      const classes = [];
+      
+      // Check if today/tomorrow
+      const daysUntilDue = Math.ceil((new Date(task.dueOn).getTime() - new Date(today).getTime()) / (1000 * 60 * 60 * 24));
+      if (daysUntilDue <= 1) {
+        classes.push('today-tomorrow');
+      }
+      
+      // Check if overdue (only if calendar date is after due date and task not completed)
+      if (calendarDate > task.dueOn && !['Completed', 'Abandoned', 'Archived'].includes(task.status)) {
+        classes.push('overdue');
+      }
+      
+      return classes;
+    }
+    
+    // Calculate task progress as of a specific date
+    async function getTaskProgressAsOfDate(taskId, asOfDate) {
+      try {
+        const db = await dbPromise;
+        const logs = await db.getAllFromIndex('timeLogs', 'taskId', taskId);
+        
+        // Sum all time logs up to and including the specified date
+        const relevantLogs = logs.filter(log => log.dateLogged <= asOfDate);
+        const totalHours = relevantLogs.reduce((sum, log) => sum + log.hours, 0);
+        
+        return totalHours;
+      } catch (err) {
+        console.error('Error calculating task progress:', err);
+        return 0;
+      }
+    }
+    
+    // Check if task should show a bar on a specific date
+    async function shouldShowTaskBarOnDate(task, calendarDate) {
+      const today = new Date().toISOString().split('T')[0];
+      
+      // Show if task is In Progress (even with no time logged)
+      if (task.status === 'In Progress') {
+        return true;
+      }
+      
+      // Show if there's time logged on this specific date
+      try {
+        const db = await dbPromise;
+        const logs = await db.getAllFromIndex('timeLogs', 'taskId', task.id);
+        const hasTimeOnDate = logs.some(log => log.dateLogged === calendarDate);
+        
+        if (hasTimeOnDate) {
+          return true;
+        }
+      } catch (err) {
+        console.error('Error checking time logs for date:', err);
+      }
+      
+      return false;
+    }
+    
+    function shouldSubmitModalTodoWithDetails() {
+      const detailsDiv = document.getElementById('modalTodoDetailsInput');
+      const detailsTextarea = document.querySelector('#modalTodoDetailsInput textarea');
+      return detailsDiv && detailsDiv.style.display !== 'none' && detailsTextarea && detailsTextarea.value.trim();
+    }
+    
+    function showModalTodoDetails() {
+      const detailsDiv = document.getElementById('modalTodoDetailsInput');
+      if (detailsDiv) {
+        detailsDiv.style.display = 'block';
+        const textarea = document.querySelector('#modalTodoDetailsInput textarea');
+        if (textarea) textarea.focus();
+      }
+    }
+    
+    function cancelModalTodoDetails() {
+      const detailsDiv = document.getElementById('modalTodoDetailsInput');
+      const textarea = document.querySelector('#modalTodoDetailsInput textarea');
+      if (detailsDiv) detailsDiv.style.display = 'none';
+      if (textarea) textarea.value = '';
+    }
+    
+    async function submitModalTodo() {
+      const input = document.getElementById('modalTodoTitleInput');
+      const title = input.value.trim();
+      if (!title) return;
+      
+      await saveTodo(title, '');
+      input.value = '';
+      loadModalTodos();
+      input.focus();
+    }
+    
+    async function submitModalTodoWithDetails() {
+      const titleInput = document.getElementById('modalTodoTitleInput');
+      const detailsTextarea = document.querySelector('#modalTodoDetailsInput textarea');
+      const title = titleInput.value.trim();
+      const content = detailsTextarea.value.trim();
+      
+      if (!title) return;
+      
+      await saveTodo(title, content);
+      titleInput.value = '';
+      detailsTextarea.value = '';
+      cancelModalTodoDetails();
+      loadModalTodos();
+      titleInput.focus();
+    }
+    
+    async function loadModalTodos() {
+      try {
+        const db = await dbPromise;
+        const allTodos = await db.getAll('todos');
+        
+        const showCompletedCheckbox = document.getElementById('modalShowCompletedTodos');
+        const showCompleted = showCompletedCheckbox?.checked || false;
+        
+        const todosToShow = showCompleted 
+          ? allTodos
+          : allTodos.filter(todo => !todo.completed);
+        
+        todosToShow.sort((a, b) => {
+          if (a.completed !== b.completed) {
+            return a.completed ? 1 : -1;
+          }
+          return new Date(b.createdAt) - new Date(a.createdAt);
+        });
+        
+        const todosList = document.getElementById('modalTodosList');
+        if (!todosList) return;
+        
+        if (todosToShow.length === 0) {
+          todosList.innerHTML = showCompleted 
+            ? '<p class="text-muted text-center">No todos yet. Add one to get started!</p>'
+            : '<p class="text-muted text-center">No active todos. Add one to get started!</p>';
+          return;
+        }
+        
+        todosList.innerHTML = todosToShow.map(todo => `
+          <div class="todo-item ${todo.completed ? 'completed' : ''}">
+            <input type="checkbox" class="form-check-input todo-checkbox" 
+                   ${todo.completed ? 'checked' : ''} 
+                   onchange="toggleTodo(${todo.id})">
+            <div class="todo-content">
+              <div class="todo-title">${todo.title}</div>
+              ${todo.content ? `<p class="todo-text">${todo.content}</p>` : ''}
+              ${todo.completed && todo.completedAt ? 
+                `<small class="text-muted">Completed: ${new Date(todo.completedAt).toLocaleDateString()}</small>` : 
+                `<small class="text-muted">Created: ${new Date(todo.createdAt).toLocaleDateString()}</small>`
+              }
+            </div>
+            <div class="todo-actions ms-auto">
+              <button class="btn btn-sm btn-outline-danger" onclick="deleteTodo(${todo.id})" title="Delete todo">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </div>
+        `).join('');
+      } catch (err) {
+        console.error('Error loading modal todos:', err);
       }
     }
     
@@ -7102,6 +8676,23 @@
                     </div>
                   </div>
                   
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <label for="workTaskProject" class="form-label">Project</label>
+                      <select class="form-select" id="workTaskProject">
+                        <option value="">No Project (AdHoc)</option>
+                        <!-- Projects will be populated here -->
+                      </select>
+                    </div>
+                    <div class="col-md-6">
+                      <label for="workTaskPhase" class="form-label">Phase</label>
+                      <select class="form-select" id="workTaskPhase">
+                        <option value="">No Phase</option>
+                        <!-- Phases will be populated here -->
+                      </select>
+                    </div>
+                  </div>
+                  
                   <div class="mb-3">
                     <label for="workTaskDescription" class="form-label">Description</label>
                     <textarea class="form-control" id="workTaskDescription" rows="4">${task.description || ''}</textarea>
@@ -7301,6 +8892,16 @@
       
       // Render category lists management for the task
       await renderWorkCategoryListsManager(task);
+      
+      // Populate project and phase dropdowns
+      await populateProjectDropdown('workTaskProject', task.projectId);
+      await populatePhaseDropdown('workTaskPhase', task.phaseKey, task.projectId);
+      
+      // Add event listener for project changes to update phase dropdown
+      document.getElementById('workTaskProject').addEventListener('change', async function() {
+        const selectedProjectId = this.value;
+        await populatePhaseDropdown('workTaskPhase', null, selectedProjectId);
+      });
       
       // Add event delegation for quick time buttons in work tab
       const workContentElement = document.getElementById('workTaskContent');
@@ -7645,6 +9246,8 @@
         importance: document.getElementById('workTaskImportance').value,
         description: document.getElementById('workTaskDescription').value.trim(),
         notes: document.getElementById('workTaskNotes').value.trim(),
+        projectId: document.getElementById('workTaskProject').value || null,
+        phaseKey: document.getElementById('workTaskPhase').value || null,
         categoryLists: Array.from(document.querySelectorAll('.category-list-checkbox:checked'))
           .map(cb => cb.value), // Update category lists from checkboxes
         estimationData: {
@@ -7891,6 +9494,13 @@
       }
     }
 
+    // Helper function to determine if we should submit with details
+    function shouldSubmitTodoWithDetails() {
+      const detailsDiv = document.getElementById('todoDetailsInput');
+      const detailsTextarea = document.querySelector('#todoDetailsInput textarea');
+      return detailsDiv && detailsDiv.style.display !== 'none' && detailsTextarea && detailsTextarea.value.trim();
+    }
+
     // Enhanced keyboard and UX handlers for Today view
     function initializeTodayFormHandlers() {
       // Todo input handlers
@@ -7901,7 +9511,12 @@
             if (e.shiftKey) {
               showTodoDetails();
             } else {
-              submitTodo();
+              // Check if details are visible and have content
+              if (shouldSubmitTodoWithDetails()) {
+                submitTodoWithDetails();
+              } else {
+                submitTodo();
+              }
             }
           }
         });
@@ -7950,7 +9565,12 @@
           e.preventDefault();
           const input = document.getElementById('todoTitleInput');
           if (input.value.trim()) {
-            submitTodo();
+            // Check if details are visible and have content
+            if (shouldSubmitTodoWithDetails()) {
+              submitTodoWithDetails();
+            } else {
+              submitTodo();
+            }
           } else {
             showTodoDetails();
           }
@@ -8099,7 +9719,146 @@
       return badges.join('');
     }
     
+    // NEW CALENDAR RENDERING FUNCTIONS
+    
+    // Build time indicators for calendar day header
+    async function buildTimeIndicators(tasks, calendarDate, workSession) {
+      const indicators = [];
+      
+      // Calculate total task time logged on this date
+      let totalTaskHours = 0;
+      for (const task of tasks) {
+        try {
+          const db = await dbPromise;
+          const logs = await db.getAllFromIndex('timeLogs', 'taskId', task.id);
+          const dayLogs = logs.filter(log => log.dateLogged === calendarDate);
+          totalTaskHours += dayLogs.reduce((sum, log) => sum + log.hours, 0);
+        } catch (err) {
+          console.error('Error calculating task time for date:', err);
+        }
+      }
+      
+      // Add task time indicator if there's any task time
+      if (totalTaskHours > 0) {
+        indicators.push(`
+          <div class="calendar-task-time" title="Task time logged: ${totalTaskHours.toFixed(1)} hours">
+            <i class="fas fa-tasks"></i>
+            <span>${totalTaskHours.toFixed(1)}h</span>
+          </div>
+        `);
+      }
+      
+      // Add punch time indicator if there's a work session
+      if (workSession) {
+        const workHours = (workSession.totalHours || 0) - (workSession.breakHours || 0);
+        if (workHours > 0) {
+          indicators.push(`
+            <div class="calendar-punch-time" title="Punched work time: ${workHours.toFixed(1)} hours">
+              <i class="fas fa-clock"></i>
+              <span>${workHours.toFixed(1)}h</span>
+            </div>
+          `);
+        }
+      }
+      
+      if (indicators.length === 0) {
+        return '';
+      }
+      
+      return `
+        <div class="calendar-time-indicators">
+          ${indicators.join('')}
+        </div>
+      `;
+    }
+
+    // Build due date badge for calendar day header
+    async function buildDueDateBadge(tasks, calendarDate) {
+      // Count tasks that are actually due on this date (not just showing progress)
+      const tasksDueToday = tasks.filter(task => task.dueOn === calendarDate);
+      
+      if (tasksDueToday.length === 0) {
+        return '';
+      }
+      
+      return `
+        <div class="calendar-due-badge">
+          <i class="fas fa-calendar-check"></i>
+          <span>${tasksDueToday.length}</span>
+        </div>
+      `;
+    }
+    
+    // Build progress bars for calendar day body
+    async function buildProgressBars(allTasks, calendarDate) {
+      const barsToShow = [];
+      
+      // Check each task to see if it should show a bar on this date
+      for (const task of allTasks) {
+        const shouldShow = await shouldShowTaskBarOnDate(task, calendarDate);
+        if (shouldShow) {
+          barsToShow.push(task);
+        }
+      }
+      
+      if (barsToShow.length === 0) {
+        return '';
+      }
+      
+      // Calculate bar height based on number of bars
+      const barCount = barsToShow.length;
+      let barHeight = CALENDAR_CONFIG.TASK_BAR_HEIGHT;
+      
+      // Only shrink if we have many bars, and not too aggressively
+      if (barCount > CALENDAR_CONFIG.MAX_BARS_BEFORE_SHRINK) {
+        const availableHeight = 73; // Available height in calendar day content
+        const totalMargins = (barCount - 1) * 2; // 1px gap between bars + 1px border each
+        const heightPerBar = Math.floor((availableHeight - totalMargins) / barCount);
+        barHeight = Math.max(CALENDAR_CONFIG.TASK_BAR_MIN_HEIGHT, heightPerBar);
+      }
+      
+      // Sort tasks by urgency and due date for consistent ordering
+      barsToShow.sort((a, b) => {
+        const urgencyOrder = { 'High': 0, 'Med': 1, 'Low': 2 };
+        if (a.urgency !== b.urgency) {
+          return urgencyOrder[a.urgency] - urgencyOrder[b.urgency];
+        }
+        return new Date(a.dueOn) - new Date(b.dueOn);
+      });
+      
+      const bars = [];
+      
+      for (const task of barsToShow) {
+        // Get progress as of this date
+        const progressHours = await getTaskProgressAsOfDate(task.id, calendarDate);
+        const estimateHours = task.estimate || 1; // Avoid division by zero
+        const progressPercent = Math.min(100, (progressHours / estimateHours) * 100);
+        
+        // Get color class based on urgency and due date proximity
+        const colorClass = getTaskBarColorClass(task, calendarDate);
+        const specialClasses = getTaskBarSpecialClasses(task, calendarDate).join(' ');
+        
+        // Check if task has no time logged (In Progress with 0 hours)
+        const hasNoTime = task.status === 'In Progress' && progressHours === 0;
+        const inProgressClass = hasNoTime ? 'in-progress-no-time' : '';
+        
+        bars.push(`
+          <div class="calendar-task-bar ${colorClass} ${specialClasses} ${inProgressClass}" 
+               style="height: ${barHeight}px;" 
+               title="${task.title} - ${progressPercent.toFixed(1)}% complete">
+            <div class="task-bar-progress" style="width: ${progressPercent}%"></div>
+            <div class="task-bar-remaining"></div>
+          </div>
+        `);
+      }
+      
+      return bars.join('');
+    }
+    
+    // Legacy function - keeping for compatibility
     function buildTaskBars(tasks) {
+      // This function is being replaced by buildProgressBars
+      // Keeping it for now to avoid breaking other views
       if (tasks.length === 0) return '';
       
       // Show up to 4 task bars, prioritizing urgent and due tasks
@@ -8189,7 +9948,7 @@
     }
     
     // EDIT TASK NAVIGATION
-    function editTask(taskId) {
+    window.editTask = function editTask(taskId) {
       // Use the existing openWorkTab function which properly switches to work tab and loads the task
       openWorkTab(parseInt(taskId));
     }
@@ -8693,17 +10452,20 @@
         const allWeekTasks = Array.from(weekTasks.values());
         
         // Calculate task progress for all week tasks
-        calculateTaskProgressData(weekStart, allWeekTasks).then(taskProgressData => {
+        calculateTaskProgressData(weekStart, allWeekTasks).then(async taskProgressData => {
           let content = `<div class="week-details">`;
           
           // Progress task cards for the week
           if (allWeekTasks.length > 0) {
             content += '<div class="tasks-section">';
-            allWeekTasks.forEach(task => {
+            for (const task of allWeekTasks) {
               const progressData = taskProgressData[task.id] || { totalHours: 0, todayHours: 0 };
               const statusClass = `status-${task.status.toLowerCase()}`;
               const progressPercent = task.estimate ? Math.min((progressData.totalHours / task.estimate) * 100, 100) : 0;
               const isOverdue = task.dueOn < weekEnd && !['Completed', 'Abandoned', 'Archived'].includes(task.status);
+              
+              // Generate project/phase badges for calendar view
+              const badgesHTML = await generateTaskBadgesHTML(task);
               
               content += `
                 <div class="progress-task-card ${isOverdue ? 'overdue' : ''}">
@@ -8716,6 +10478,7 @@
                       <i class="fas fa-edit"></i> Edit
                     </button>
                   </div>
+                  ${badgesHTML}
                   <div class="task-card-body">
                     <div class="task-title">${task.title}</div>
                     <div class="task-progress-section">
@@ -8744,7 +10507,7 @@
                   </div>
                 </div>
               `;
-            });
+            }
             content += '</div>';
           } else {
             content += `
@@ -8770,17 +10533,20 @@
         subtitleElement.textContent = isToday ? 'Today' : '';
         
         // Calculate task progress and today's hours
-        calculateTaskProgressData(dateStr, dayStats.tasks).then(taskProgressData => {
+        calculateTaskProgressData(dateStr, dayStats.tasks).then(async taskProgressData => {
           let content = `<div class="day-details">`;
           
           // Status-colored task cards with progress
           if (dayStats.tasks.length > 0) {
             content += '<div class="tasks-section">';
-            dayStats.tasks.forEach(task => {
+            for (const task of dayStats.tasks) {
               const progressData = taskProgressData[task.id] || { totalHours: 0, todayHours: 0 };
               const statusClass = `status-${task.status.toLowerCase()}`;
               const progressPercent = task.estimate ? Math.min((progressData.totalHours / task.estimate) * 100, 100) : 0;
               const isOverdue = task.dueOn < dateStr && !['Completed', 'Abandoned', 'Archived'].includes(task.status);
+              
+              // Generate project/phase badges for daily view
+              const badgesHTML = await generateTaskBadgesHTML(task);
               
               content += `
                 <div class="progress-task-card ${isOverdue ? 'overdue' : ''}">
@@ -8793,6 +10559,7 @@
                       <i class="fas fa-edit"></i> Edit
                     </button>
                   </div>
+                  ${badgesHTML}
                   <div class="task-card-body">
                     <div class="task-title">${task.title}</div>
                     <div class="task-progress-section">
@@ -8821,7 +10588,7 @@
                   </div>
                 </div>
               `;
-            });
+            }
             content += '</div>';
           } else {
             content += `
@@ -8939,6 +10706,8 @@
     function restoreCalendarFilters() {
       const statusFilter = document.getElementById('calendarStatusFilter');
       const urgencyFilter = document.getElementById('calendarUrgencyFilter');
+      const projectFilter = document.getElementById('calendarProjectFilter');
+      const phaseFilter = document.getElementById('calendarPhaseFilter');
       
       if (statusFilter) {
         const savedStatus = localStorage.getItem('calendarStatusFilter');
@@ -8962,6 +10731,160 @@
             urgencyFilter.style.backgroundColor = 'rgba(0, 123, 255, 0.1)';
           }
         }
+      }
+    }
+    
+    // GLOBAL FILTERS INITIALIZATION
+    function initializeGlobalFilters() {
+      const projectFilter = document.getElementById('globalProjectFilter');
+      const phaseFilter = document.getElementById('globalPhaseFilter');
+      const clearBtn = document.getElementById('globalFilterClear');
+      
+      // Populate filter dropdowns
+      populateGlobalFilters();
+      
+      // Project filter handler
+      if (projectFilter) {
+        projectFilter.addEventListener('change', () => {
+          localStorage.setItem('globalProjectFilter', projectFilter.value);
+          updateGlobalFilterStyling();
+          applyGlobalFilters();
+        });
+      }
+      
+      // Phase filter handler
+      if (phaseFilter) {
+        phaseFilter.addEventListener('change', () => {
+          localStorage.setItem('globalPhaseFilter', phaseFilter.value);
+          updateGlobalFilterStyling();
+          applyGlobalFilters();
+        });
+      }
+      
+      // Clear filters button handler
+      if (clearBtn) {
+        clearBtn.addEventListener('click', () => {
+          if (projectFilter) {
+            projectFilter.value = '';
+            localStorage.removeItem('globalProjectFilter');
+          }
+          if (phaseFilter) {
+            phaseFilter.value = '';
+            localStorage.removeItem('globalPhaseFilter');
+          }
+          updateGlobalFilterStyling();
+          applyGlobalFilters();
+        });
+      }
+      
+      // Restore saved filter values
+      restoreGlobalFilters();
+    }
+    
+    // RESTORE GLOBAL FILTERS
+    function restoreGlobalFilters() {
+      const projectFilter = document.getElementById('globalProjectFilter');
+      const phaseFilter = document.getElementById('globalPhaseFilter');
+      
+      if (projectFilter) {
+        const savedProject = localStorage.getItem('globalProjectFilter');
+        if (savedProject) {
+          projectFilter.value = savedProject;
+        }
+      }
+      
+      if (phaseFilter) {
+        const savedPhase = localStorage.getItem('globalPhaseFilter');
+        if (savedPhase) {
+          phaseFilter.value = savedPhase;
+        }
+      }
+      
+      updateGlobalFilterStyling();
+    }
+    
+    // UPDATE GLOBAL FILTER STYLING
+    function updateGlobalFilterStyling() {
+      const projectFilter = document.getElementById('globalProjectFilter');
+      const phaseFilter = document.getElementById('globalPhaseFilter');
+      const clearBtn = document.getElementById('globalFilterClear');
+      
+      let hasActiveFilters = false;
+      
+      if (projectFilter && projectFilter.value !== '') {
+        projectFilter.style.borderColor = 'rgba(0,123,255,0.6)';
+        projectFilter.style.background = 'rgba(0,123,255,0.1)';
+        hasActiveFilters = true;
+      } else if (projectFilter) {
+        projectFilter.style.borderColor = 'rgba(206,212,218,0.6)';
+        projectFilter.style.background = 'linear-gradient(135deg, rgba(255,255,255,0.9), rgba(248,249,250,0.9))';
+      }
+      
+      if (phaseFilter && phaseFilter.value !== '') {
+        phaseFilter.style.borderColor = 'rgba(0,123,255,0.6)';
+        phaseFilter.style.background = 'rgba(0,123,255,0.1)';
+        hasActiveFilters = true;
+      } else if (phaseFilter) {
+        phaseFilter.style.borderColor = 'rgba(206,212,218,0.6)';
+        phaseFilter.style.background = 'linear-gradient(135deg, rgba(255,255,255,0.9), rgba(248,249,250,0.9))';
+      }
+      
+      if (clearBtn) {
+        clearBtn.style.display = hasActiveFilters ? 'block' : 'none';
+      }
+    }
+    
+    // APPLY GLOBAL FILTERS
+    function applyGlobalFilters() {
+      // Get current view and re-render with filters
+      const currentViewElement = document.querySelector('.nav-link.active');
+      if (currentViewElement) {
+        const viewId = currentViewElement.id;
+        if (viewId === 'boardTab') {
+          renderTasks('board');
+        } else if (viewId === 'monthTab') {
+          renderTasks('month');
+        }
+        // Note: Reports view will have its own dedicated filtering system
+      }
+    }
+    
+    // POPULATE GLOBAL FILTER DROPDOWNS
+    async function populateGlobalFilters() {
+      const projectFilter = document.getElementById('globalProjectFilter');
+      const phaseFilter = document.getElementById('globalPhaseFilter');
+      
+      try {
+        // Populate projects
+        const projects = await getProjects();
+        const projectOptions = projects.map(project => 
+          `<option value="${project.id}">${project.name}</option>`
+        ).join('');
+        
+        if (projectFilter) {
+          projectFilter.innerHTML = '<option value="">All Projects</option>' + projectOptions;
+        }
+        
+        // Populate phases
+        const phaseLists = await getPhaseLists();
+        let phaseOptions = '';
+        
+        phaseLists.forEach(phaseList => {
+          phaseList.phases.forEach(phase => {
+            const phaseKey = `${phaseList.slug}.${phase.slug}`;
+            phaseOptions += `<option value="${phaseKey}">${phaseList.title}: ${phase.title}</option>`;
+          });
+        });
+        
+        if (phaseFilter) {
+          phaseFilter.innerHTML = '<option value="">All Phases</option>' + phaseOptions;
+        }
+        
+        // Restore saved values after populating
+        restoreGlobalFilters();
+        
+      } catch (err) {
+        console.error('Error populating global filters:', err);
       }
     }
     
@@ -9924,11 +11847,11 @@
           categoryList.slug = generateSlug(categoryList.title);
         }
 
-        // Ensure categories have slugs
+        // Ensure categories have slugs with list prefix for uniqueness
         if (categoryList.categories) {
           categoryList.categories = categoryList.categories.map(cat => ({
             title: cat.title,
-            slug: cat.slug || generateSlug(cat.title)
+            slug: cat.slug || `${categoryList.slug}.${generateSlug(cat.title)}`
           }));
         }
 
@@ -10009,6 +11932,258 @@
       };
     }
     
+    // Get project display info
+    async function getProjectDisplayInfo(projectId) {
+      if (!projectId) return { name: '', shortName: '' };
+      
+      try {
+        const db = await dbPromise;
+        const project = await db.get('projects', parseInt(projectId));
+        
+        if (!project) {
+          return { name: `Project ${projectId}`, shortName: `P${projectId}` };
+        }
+        
+        return {
+          name: project.name,
+          shortName: project.name.length > 12 ? project.name.substring(0, 12) + '...' : project.name
+        };
+      } catch (err) {
+        console.error('Error getting project display info:', err);
+        return { name: `Project ${projectId}`, shortName: `P${projectId}` };
+      }
+    }
+    
+    // Get phase display info
+    async function getPhaseDisplayInfo(phaseKey) {
+      if (!phaseKey) return { listTitle: '', itemTitle: '', shortTitle: '' };
+      
+      const { listSlug, itemSlug } = parseCategoryKey(phaseKey); // Reuse category key parsing
+      
+      if (!listSlug || !itemSlug) {
+        return { listTitle: '', itemTitle: phaseKey, shortTitle: phaseKey };
+      }
+      
+      try {
+        const db = await dbPromise;
+        const phaseList = await db.get('phaseLists', listSlug);
+        
+        if (!phaseList) {
+          return { listTitle: listSlug, itemTitle: itemSlug, shortTitle: itemSlug };
+        }
+        
+        const phase = phaseList.phases.find(p => p.slug === itemSlug);
+        const itemTitle = phase ? phase.title : itemSlug;
+        const shortTitle = itemTitle.length > 10 ? itemTitle.substring(0, 10) + '...' : itemTitle;
+        
+        return {
+          listTitle: phaseList.title,
+          itemTitle: itemTitle,
+          shortTitle: shortTitle
+        };
+      } catch (err) {
+        console.error('Error getting phase display info:', err);
+        return { listTitle: listSlug, itemTitle: itemSlug, shortTitle: itemSlug };
+      }
+    }
+    
+    // ===== PROJECTS CRUD FUNCTIONS =====
+    
+    // Get all projects
+    async function getProjects() {
+      try {
+        const db = await dbPromise;
+        return await db.getAll('projects');
+      } catch (err) {
+        console.error('Error loading projects:', err);
+        return [];
+      }
+    }
+
+    // Save project (create or update)
+    async function saveProject(project) {
+      try {
+        const db = await dbPromise;
+        
+        // Validate required fields
+        if (!project.name || project.name.trim() === '') {
+          throw new Error('Project name is required');
+        }
+        
+        // Set defaults
+        if (!project.status) {
+          project.status = 'Ready';
+        }
+        
+        const result = await db.put('projects', project);
+        
+        if (!project.id) {
+          project.id = result;
+        }
+        
+        showToast(`Project "${project.name}" saved successfully!`, 'success');
+        return project;
+      } catch (err) {
+        console.error('Error saving project:', err);
+        showToast('Failed to save project: ' + err.message, 'error');
+        throw err;
+      }
+    }
+
+    // Delete project
+    async function deleteProject(id) {
+      try {
+        const db = await dbPromise;
+        
+        // Check if any tasks are using this project
+        const tasks = await getTasks();
+        const linkedTasks = tasks.filter(task => task.projectId === id);
+        
+        if (linkedTasks.length > 0) {
+          throw new Error(`Cannot delete project: ${linkedTasks.length} task(s) are still linked to it`);
+        }
+        
+        await db.delete('projects', id);
+        showToast('Project deleted successfully!', 'success');
+        return true;
+      } catch (err) {
+        console.error('Error deleting project:', err);
+        showToast('Failed to delete project: ' + err.message, 'error');
+        return false;
+      }
+    }
+
+    // ===== PHASE LISTS CRUD FUNCTIONS =====
+    
+    // Get all phase lists
+    async function getPhaseLists() {
+      try {
+        const db = await dbPromise;
+        return await db.getAll('phaseLists');
+      } catch (err) {
+        console.error('Error loading phase lists:', err);
+        return [];
+      }
+    }
+
+    // Get phase list by slug
+    async function getPhaseListBySlug(slug) {
+      try {
+        const db = await dbPromise;
+        const lists = await db.getAllFromIndex('phaseLists', 'slug', slug);
+        return lists.length > 0 ? lists[0] : null;
+      } catch (err) {
+        console.error('Error loading phase list by slug:', err);
+        return null;
+      }
+    }
+
+    // Save phase list (create or update)
+    async function savePhaseList(phaseList) {
+      try {
+        const db = await dbPromise;
+        
+        // Generate slug if not provided
+        if (!phaseList.slug && phaseList.title) {
+          phaseList.slug = generateSlug(phaseList.title);
+        }
+
+        // Ensure phases have slugs with list prefix for uniqueness
+        if (phaseList.phases) {
+          phaseList.phases = phaseList.phases.map(phase => ({
+            title: phase.title,
+            slug: phase.slug || `${phaseList.slug}.${generateSlug(phase.title)}`
+          }));
+        }
+
+        // Validate slug uniqueness
+        if (!(await isPhaseListSlugUnique(phaseList.slug, phaseList.id))) {
+          throw new Error(`Slug "${phaseList.slug}" already exists. Please choose a different title.`);
+        }
+
+        const result = await db.put('phaseLists', phaseList);
+        
+        if (!phaseList.id) {
+          phaseList.id = result;
+        }
+        
+        showToast(`Phase list "${phaseList.title}" saved successfully!`, 'success');
+        return phaseList;
+      } catch (err) {
+        console.error('Error saving phase list:', err);
+        showToast('Failed to save phase list: ' + err.message, 'error');
+        throw err;
+      }
+    }
+
+    // Delete phase list
+    async function deletePhaseList(id) {
+      try {
+        const db = await dbPromise;
+        
+        // Check if any projects are using this phase list
+        const projects = await getProjects();
+        const linkedProjects = projects.filter(project => project.phaseListId === id);
+        
+        if (linkedProjects.length > 0) {
+          throw new Error(`Cannot delete phase list: ${linkedProjects.length} project(s) are still linked to it`);
+        }
+        
+        // Check if any tasks are using phases from this list
+        const tasks = await getTasks();
+        const phaseList = await db.get('phaseLists', id);
+        if (phaseList) {
+          const linkedTasks = tasks.filter(task => {
+            if (!task.phaseKey) return false;
+            const { listSlug } = parsePhaseKey(task.phaseKey);
+            return listSlug === phaseList.slug;
+          });
+          
+          if (linkedTasks.length > 0) {
+            throw new Error(`Cannot delete phase list: ${linkedTasks.length} task(s) are still using phases from this list`);
+          }
+        }
+        
+        await db.delete('phaseLists', id);
+        showToast('Phase list deleted successfully!', 'success');
+        return true;
+      } catch (err) {
+        console.error('Error deleting phase list:', err);
+        showToast('Failed to delete phase list: ' + err.message, 'error');
+        return false;
+      }
+    }
+
+    // Check if phase list slug is unique
+    async function isPhaseListSlugUnique(slug, excludeId = null) {
+      try {
+        const db = await dbPromise;
+        const existing = await db.getAllFromIndex('phaseLists', 'slug', slug);
+        return existing.length === 0 || (excludeId && existing.length === 1 && existing[0].id === excludeId);
+      } catch (err) {
+        console.error('Error checking phase list slug uniqueness:', err);
+        return false;
+      }
+    }
+
+    // Generate phase key (list-slug.item-slug)
+    function generatePhaseKey(listSlug, itemSlug) {
+      return `${listSlug}.${itemSlug}`;
+    }
+
+    // Parse phase key back to components
+    function parsePhaseKey(phaseKey) {
+      if (!phaseKey || !phaseKey.includes('.')) {
+        return { listSlug: null, itemSlug: null };
+      }
+      
+      const [listSlug, ...itemParts] = phaseKey.split('.');
+      const itemSlug = itemParts.join('.'); // Handle cases where item might have dots
+      
+      return { listSlug, itemSlug };
+    }
+
+    // Get phase display info from key
     // Punch clock state
     let currentWorkSession = null;
     let currentActivity = null;
@@ -10474,12 +12649,17 @@
       
       // Initialize category lists manager
       setTimeout(initializeCategoryListsModal, 100);
+      setTimeout(initializeProjectsModal, 100);
+      setTimeout(initializePhaseListsModal, 100);
       
       // Initialize task details modal
       setTimeout(initializeTaskDetailsModal, 100);
       
       // Initialize time log modal
       setTimeout(initializeTimeLogModal, 100);
+      
+      // Initialize todo list modal
+      setTimeout(initializeTodoListModal, 100);
     });
 
     // === PUNCH CLOCK DATA UTILITIES ===
@@ -10701,6 +12881,18 @@
           categorySection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
       }, 100);
+    }
+
+    // Manage projects
+    window.manageProjects = function() {
+      const projectsModal = new bootstrap.Modal(document.getElementById('projectsModal'));
+      projectsModal.show();
+    }
+
+    // Manage phases (will add this modal later)
+    window.managePhases = function() {
+      const phaseListsModal = new bootstrap.Modal(document.getElementById('phaseListsModal'));
+      phaseListsModal.show();
     }
 
     // Initialize sidebar state on page load
