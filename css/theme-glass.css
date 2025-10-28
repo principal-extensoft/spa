@@ -1,0 +1,1112 @@
+/* ============================================================
+   THEME-GLASS.CSS - Glassmorphism/Gel Theme (Early 2000s Inspired)
+   ============================================================
+   Features: Frosted glass effects, gel buttons, glowing accents,
+   vibrant gradients, and luminous UI elements
+   ============================================================ */
+
+/* ============================================================
+   PHASE 1: GLOBAL COLORS & FOUNDATION
+   ============================================================ */
+
+body {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Glass effect utility */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+/* Glow effect utility */
+.glow {
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5),
+              0 0 20px rgba(255, 255, 255, 0.3),
+              0 0 30px rgba(255, 255, 255, 0.2);
+}
+
+/* ============================================================
+   URGENCY & IMPORTANCE COLORS (Glowing)
+   ============================================================ */
+
+.urgency-high {
+  color: #ff6b9d;
+  text-shadow: 0 0 10px rgba(255, 107, 157, 0.8);
+}
+
+.urgency-med {
+  color: #ffd93d;
+  text-shadow: 0 0 10px rgba(255, 217, 61, 0.8);
+}
+
+.urgency-low {
+  color: #6bffb8;
+  text-shadow: 0 0 10px rgba(107, 255, 184, 0.8);
+}
+
+.importance-high {
+  background: linear-gradient(135deg, #ff6b9d 0%, #ff4081 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(255, 64, 129, 0.5),
+              inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.importance-med {
+  background: linear-gradient(135deg, #ffd93d 0%, #ffb300 100%);
+  color: #333;
+  box-shadow: 0 4px 15px rgba(255, 179, 0, 0.5),
+              inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.importance-low {
+  background: linear-gradient(135deg, #6bffb8 0%, #00d4aa 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 212, 170, 0.5),
+              inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* ============================================================
+   SIDEBAR COLORS (Frosted Glass)
+   ============================================================ */
+
+.sidebar {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar-toggle {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2),
+              inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.sidebar-toggle:hover {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.2));
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5),
+              0 4px 15px rgba(0, 0, 0, 0.2),
+              inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.sidebar-nav-item {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1),
+              inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.sidebar-nav-item:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3),
+              0 4px 15px rgba(0, 0, 0, 0.2),
+              inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.sidebar-nav-item.active {
+  background: linear-gradient(135deg, rgba(103, 126, 234, 0.6), rgba(118, 75, 162, 0.6));
+  color: white;
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 25px rgba(103, 126, 234, 0.6),
+              0 4px 15px rgba(0, 0, 0, 0.3),
+              inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* ============================================================
+   SUMMARY CARDS (Glassy)
+   ============================================================ */
+
+.summary-card {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2),
+              inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.summary-card p {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* ============================================================
+   EDITABLE ELEMENTS (Subtle Glow)
+   ============================================================ */
+
+.editable:hover {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+.editing {
+  background: rgba(255, 217, 61, 0.2);
+  border: 1px solid rgba(255, 217, 61, 0.5);
+  box-shadow: 0 0 20px rgba(255, 217, 61, 0.4);
+}
+
+/* ============================================================
+   PHASE 2: CALENDAR COLORS (Frosted Glass)
+   ============================================================ */
+
+.calendar-table td {
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.task-event {
+  background: linear-gradient(135deg, rgba(103, 126, 234, 0.7), rgba(118, 75, 162, 0.7));
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 15px rgba(103, 126, 234, 0.4),
+              inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.calendar-controls {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2),
+              inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.calendar-controls h3 {
+  color: white;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.calendar-detail-section {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+.calendar-day-cell {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.calendar-day-cell:hover {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.4),
+              0 8px 20px rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.calendar-day-cell.selected {
+  background: rgba(103, 126, 234, 0.3);
+  border-color: rgba(103, 126, 234, 0.6);
+  box-shadow: 0 0 30px rgba(103, 126, 234, 0.6),
+              0 8px 20px rgba(0, 0, 0, 0.2),
+              inset 0 0 20px rgba(103, 126, 234, 0.2);
+}
+
+.calendar-day-cell.other-month {
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.calendar-day-cell.today {
+  background: rgba(255, 217, 61, 0.2);
+  border-color: rgba(255, 217, 61, 0.6);
+  box-shadow: 0 0 30px rgba(255, 217, 61, 0.5),
+              0 8px 20px rgba(0, 0, 0, 0.2),
+              inset 0 0 20px rgba(255, 217, 61, 0.1);
+}
+
+.calendar-task-indicator {
+  background: rgba(103, 126, 234, 0.3);
+  backdrop-filter: blur(5px);
+  color: white;
+  border-left: 3px solid rgba(103, 126, 234, 0.8);
+  box-shadow: 0 2px 8px rgba(103, 126, 234, 0.3);
+}
+
+.calendar-hours-badge {
+  background: rgba(103, 126, 234, 0.4);
+  backdrop-filter: blur(5px);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 15px rgba(103, 126, 234, 0.5);
+}
+
+/* ============================================================
+   PHASE 3: PROGRESS TASK CARDS (Gel Buttons Style)
+   ============================================================ */
+
+.progress-task-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2),
+              inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.progress-task-card:hover {
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.4),
+              0 12px 40px rgba(0, 0, 0, 0.3),
+              inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.progress-task-card.overdue {
+  border-left: 4px solid rgba(255, 107, 157, 0.8);
+  box-shadow: 0 0 20px rgba(255, 107, 157, 0.4),
+              0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+/* Task Card Header Status Colors - Glowing Gel Style */
+.task-card-header.status-not-started {
+  background: linear-gradient(135deg, rgba(200, 200, 220, 0.3) 0%, rgba(180, 180, 200, 0.3) 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.task-card-header.status-in-progress {
+  background: linear-gradient(135deg, rgba(103, 126, 234, 0.5) 0%, rgba(118, 75, 162, 0.5) 100%);
+  color: white;
+  box-shadow: 0 0 20px rgba(103, 126, 234, 0.4),
+              inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.task-card-header.status-blocked {
+  background: linear-gradient(135deg, rgba(255, 107, 157, 0.5) 0%, rgba(255, 64, 129, 0.5) 100%);
+  color: white;
+  box-shadow: 0 0 20px rgba(255, 64, 129, 0.4),
+              inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.task-card-header.status-completed {
+  background: linear-gradient(135deg, rgba(107, 255, 184, 0.5) 0%, rgba(0, 212, 170, 0.5) 100%);
+  color: white;
+  box-shadow: 0 0 20px rgba(0, 212, 170, 0.4),
+              inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.task-card-header.status-deferred {
+  background: linear-gradient(135deg, rgba(255, 217, 61, 0.5) 0%, rgba(255, 179, 0, 0.5) 100%);
+  color: white;
+  box-shadow: 0 0 20px rgba(255, 179, 0, 0.4),
+              inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Urgency Indicators - Glowing Pills */
+.urgency-indicator.urgency-high {
+  background: rgba(255, 107, 157, 0.3);
+  backdrop-filter: blur(5px);
+  color: #ff6b9d;
+  border: 1px solid rgba(255, 107, 157, 0.5);
+  box-shadow: 0 0 15px rgba(255, 107, 157, 0.6),
+              inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.urgency-indicator.urgency-med {
+  background: rgba(255, 217, 61, 0.3);
+  backdrop-filter: blur(5px);
+  color: #ffd93d;
+  border: 1px solid rgba(255, 217, 61, 0.5);
+  box-shadow: 0 0 15px rgba(255, 217, 61, 0.6),
+              inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.urgency-indicator.urgency-low {
+  background: rgba(107, 255, 184, 0.3);
+  backdrop-filter: blur(5px);
+  color: #6bffb8;
+  border: 1px solid rgba(107, 255, 184, 0.5);
+  box-shadow: 0 0 15px rgba(107, 255, 184, 0.6),
+              inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Task Reason Badges - Frosted */
+.task-reason-badge {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.due-badge-reason,
+.time-badge-reason,
+.both-badge-reason {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.task-dates {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Progress Bars - Glowing */
+.progress {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.progress-bar {
+  background: linear-gradient(90deg, rgba(103, 126, 234, 0.8) 0%, rgba(118, 75, 162, 0.8) 100%);
+  box-shadow: 0 0 15px rgba(103, 126, 234, 0.6),
+              inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.progress-label {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* ============================================================
+   PHASE 4: BOARD VIEW (KANBAN) - Glassy Columns
+   ============================================================ */
+
+.kanban-column {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.kanban-column-header {
+  color: white;
+  border-bottom-color: rgba(255, 255, 255, 0.2);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.kanban-column.status-not-started .kanban-column-header {
+  border-bottom-color: rgba(200, 200, 220, 0.5);
+  text-shadow: 0 0 15px rgba(200, 200, 220, 0.5);
+}
+
+.kanban-column.status-in-progress .kanban-column-header {
+  border-bottom-color: rgba(103, 126, 234, 0.8);
+  text-shadow: 0 0 15px rgba(103, 126, 234, 0.8);
+}
+
+.kanban-column.status-blocked .kanban-column-header {
+  border-bottom-color: rgba(255, 107, 157, 0.8);
+  text-shadow: 0 0 15px rgba(255, 107, 157, 0.8);
+}
+
+.kanban-column.status-completed .kanban-column-header {
+  border-bottom-color: rgba(107, 255, 184, 0.8);
+  text-shadow: 0 0 15px rgba(107, 255, 184, 0.8);
+}
+
+.kanban-column.status-deferred .kanban-column-header {
+  border-bottom-color: rgba(255, 217, 61, 0.8);
+  text-shadow: 0 0 15px rgba(255, 217, 61, 0.8);
+}
+
+.task-count-badge {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(5px);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.kanban-task-card {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2),
+              inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.kanban-task-card:hover {
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.4),
+              0 8px 25px rgba(0, 0, 0, 0.3),
+              inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  border-color: rgba(103, 126, 234, 0.6);
+}
+
+.kanban-task-meta {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* ============================================================
+   PHASE 5: BOARD DETAIL PANE - Frosted Glass
+   ============================================================ */
+
+.board-detail-pane {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+.board-detail-empty {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.detail-task-title {
+  color: white;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.detail-metric {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1),
+              inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.detail-metric-label {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.detail-metric-value {
+  color: white;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.detail-section-title {
+  color: white;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.detail-description,
+.detail-notes {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+}
+
+.detail-history-item,
+.detail-log-item {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.detail-history-date,
+.detail-log-date {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* ============================================================
+   PHASE 6: WORK VIEW (ESTIMATION) - Glowing Sliders
+   ============================================================ */
+
+.estimation-panel {
+  background: linear-gradient(135deg, rgba(103, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2),
+              0 0 40px rgba(103, 126, 234, 0.3),
+              inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.estimation-title {
+  color: white;
+  text-shadow: 0 0 20px rgba(103, 126, 234, 0.8);
+}
+
+.slider-label {
+  color: white;
+}
+
+.form-range {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.form-range::-webkit-slider-thumb {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(200, 200, 255, 0.9));
+  border: 2px solid white;
+  box-shadow: 0 0 20px rgba(103, 126, 234, 0.8),
+              0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.form-range::-webkit-slider-thumb:hover {
+  background: linear-gradient(135deg, white, rgba(220, 220, 255, 1));
+  box-shadow: 0 0 30px rgba(103, 126, 234, 1),
+              0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+.form-range::-moz-range-thumb {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(200, 200, 255, 0.9));
+  border: 2px solid white;
+  box-shadow: 0 0 20px rgba(103, 126, 234, 0.8),
+              0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.form-range::-moz-range-thumb:hover {
+  background: linear-gradient(135deg, white, rgba(220, 220, 255, 1));
+  box-shadow: 0 0 30px rgba(103, 126, 234, 1),
+              0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+.scale-hint {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+#velocityPrediction {
+  background: linear-gradient(135deg, rgba(107, 255, 184, 0.3) 0%, rgba(0, 212, 170, 0.3) 100%);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(107, 255, 184, 0.5);
+  color: white;
+  box-shadow: 0 0 30px rgba(107, 255, 184, 0.5),
+              0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+#velocityPrediction i {
+  color: #6bffb8;
+  filter: drop-shadow(0 0 10px rgba(107, 255, 184, 0.8));
+}
+
+/* ============================================================
+   WORK SESSION COLORS - Frosted Cards
+   ============================================================ */
+
+.work-session-section {
+  border-top-color: rgba(255, 255, 255, 0.2);
+}
+
+.work-session-info {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.work-session-row:not(:last-child) {
+  border-bottom-color: rgba(255, 255, 255, 0.15);
+}
+
+.work-session-label {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.work-session-value {
+  color: white;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.no-session-message {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px dashed rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+}
+
+/* ============================================================
+   REPORTS VIEW - Glowing Metrics
+   ============================================================ */
+
+.velocity-section {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.velocity-metric {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1),
+              inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.velocity-metric-label {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.velocity-metric-value {
+  color: white;
+  text-shadow: 0 0 20px rgba(103, 126, 234, 0.8);
+}
+
+.velocity-accuracy {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.accuracy-bar-container {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.accuracy-bar.within-range {
+  background: linear-gradient(90deg, rgba(107, 255, 184, 0.8) 0%, rgba(0, 212, 170, 0.8) 100%);
+  color: white;
+  box-shadow: 0 0 20px rgba(107, 255, 184, 0.6);
+}
+
+.accuracy-bar.underestimated {
+  background: linear-gradient(90deg, rgba(255, 217, 61, 0.8) 0%, rgba(255, 179, 0, 0.8) 100%);
+  color: white;
+  box-shadow: 0 0 20px rgba(255, 217, 61, 0.6);
+}
+
+.accuracy-bar.overestimated {
+  background: linear-gradient(90deg, rgba(255, 107, 157, 0.8) 0%, rgba(255, 64, 129, 0.8) 100%);
+  color: white;
+  box-shadow: 0 0 20px rgba(255, 107, 157, 0.6);
+}
+
+.velocity-interpretation {
+  background: rgba(255, 217, 61, 0.2);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 217, 61, 0.4);
+  color: white;
+  box-shadow: 0 0 20px rgba(255, 217, 61, 0.3);
+}
+
+.velocity-interpretation h5 {
+  color: #ffd93d;
+  text-shadow: 0 0 15px rgba(255, 217, 61, 0.8);
+}
+
+/* ============================================================
+   PHASE 7: BOOTSTRAP OVERRIDES - Gel Buttons & Glass Cards
+   ============================================================ */
+
+/* Cards - Frosted Glass */
+.card {
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(15px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
+}
+
+.card-header {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+}
+
+.card-body {
+  background: transparent !important;
+  color: white !important;
+}
+
+.card-footer {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Tables - Glass Effect */
+.table {
+  color: white !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+.table thead th {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.table tbody td {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: white !important;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+.table-hover tbody tr:hover {
+  background: rgba(255, 255, 255, 0.15) !important;
+  color: white !important;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Modals - Frosted Glass */
+.modal-content {
+  background: rgba(30, 30, 50, 0.7) !important;
+  backdrop-filter: blur(30px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5) !important;
+}
+
+.modal-header {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
+}
+
+.modal-body {
+  background: transparent !important;
+  color: white !important;
+}
+
+.modal-footer {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Forms - Glassy Inputs */
+.form-control,
+.form-select {
+  background: rgba(255, 255, 255, 0.12) !important;
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  color: white !important;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+}
+
+.form-control:focus,
+.form-select:focus {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border-color: rgba(103, 126, 234, 0.8) !important;
+  color: white !important;
+  box-shadow: 0 0 20px rgba(103, 126, 234, 0.6),
+              inset 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+}
+
+.form-control::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.form-label {
+  color: white !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+}
+
+.form-check-input {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  backdrop-filter: blur(5px) !important;
+}
+
+.form-check-input:checked {
+  background: linear-gradient(135deg, rgba(103, 126, 234, 0.8), rgba(118, 75, 162, 0.8)) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  box-shadow: 0 0 15px rgba(103, 126, 234, 0.6) !important;
+}
+
+.form-check-label {
+  color: white !important;
+}
+
+/* Buttons - Gel Style with Glow */
+.btn-primary {
+  background: linear-gradient(135deg, rgba(103, 126, 234, 0.8), rgba(118, 75, 162, 0.8)) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  color: white !important;
+  box-shadow: 0 0 20px rgba(103, 126, 234, 0.5),
+              0 4px 15px rgba(0, 0, 0, 0.3),
+              inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, rgba(118, 75, 162, 0.9), rgba(103, 126, 234, 0.9)) !important;
+  box-shadow: 0 0 30px rgba(103, 126, 234, 0.8),
+              0 6px 20px rgba(0, 0, 0, 0.4),
+              inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+}
+
+.btn-secondary {
+  background: rgba(200, 200, 220, 0.3) !important;
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  color: white !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2),
+              inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+}
+
+.btn-secondary:hover {
+  background: rgba(200, 200, 220, 0.4) !important;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3),
+              0 6px 20px rgba(0, 0, 0, 0.3),
+              inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+}
+
+.btn-success {
+  background: linear-gradient(135deg, rgba(107, 255, 184, 0.7), rgba(0, 212, 170, 0.7)) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  color: white !important;
+  box-shadow: 0 0 20px rgba(107, 255, 184, 0.5),
+              0 4px 15px rgba(0, 0, 0, 0.3),
+              inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, rgba(255, 107, 157, 0.7), rgba(255, 64, 129, 0.7)) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  color: white !important;
+  box-shadow: 0 0 20px rgba(255, 107, 157, 0.5),
+              0 4px 15px rgba(0, 0, 0, 0.3),
+              inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+}
+
+.btn-warning {
+  background: linear-gradient(135deg, rgba(255, 217, 61, 0.7), rgba(255, 179, 0, 0.7)) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  color: white !important;
+  box-shadow: 0 0 20px rgba(255, 217, 61, 0.5),
+              0 4px 15px rgba(0, 0, 0, 0.3),
+              inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+}
+
+.btn-outline-primary {
+  color: white !important;
+  border: 1px solid rgba(103, 126, 234, 0.6) !important;
+  background: rgba(103, 126, 234, 0.1) !important;
+  backdrop-filter: blur(5px) !important;
+}
+
+.btn-outline-primary:hover {
+  background: linear-gradient(135deg, rgba(103, 126, 234, 0.6), rgba(118, 75, 162, 0.6)) !important;
+  color: white !important;
+  box-shadow: 0 0 20px rgba(103, 126, 234, 0.6) !important;
+}
+
+.btn-outline-secondary {
+  color: white !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(5px) !important;
+}
+
+.btn-outline-secondary:hover {
+  background: rgba(255, 255, 255, 0.15) !important;
+  color: white !important;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3) !important;
+}
+
+.btn-outline-info {
+  color: white !important;
+  border: 1px solid rgba(79, 172, 254, 0.6) !important;
+  background: rgba(79, 172, 254, 0.1) !important;
+  backdrop-filter: blur(5px) !important;
+}
+
+.btn-outline-info:hover {
+  background: rgba(79, 172, 254, 0.5) !important;
+  color: white !important;
+  box-shadow: 0 0 20px rgba(79, 172, 254, 0.6) !important;
+}
+
+/* Badges - Glowing Pills */
+.badge {
+  backdrop-filter: blur(5px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.badge.bg-info {
+  background: linear-gradient(135deg, rgba(79, 172, 254, 0.7), rgba(0, 242, 254, 0.7)) !important;
+  color: white !important;
+  box-shadow: 0 0 15px rgba(79, 172, 254, 0.5) !important;
+}
+
+.badge.bg-primary {
+  background: linear-gradient(135deg, rgba(103, 126, 234, 0.7), rgba(118, 75, 162, 0.7)) !important;
+  color: white !important;
+  box-shadow: 0 0 15px rgba(103, 126, 234, 0.5) !important;
+}
+
+.badge.bg-secondary {
+  background: rgba(200, 200, 220, 0.4) !important;
+  color: white !important;
+  box-shadow: 0 0 10px rgba(200, 200, 220, 0.3) !important;
+}
+
+.badge.bg-success {
+  background: linear-gradient(135deg, rgba(107, 255, 184, 0.7), rgba(0, 212, 170, 0.7)) !important;
+  color: white !important;
+  box-shadow: 0 0 15px rgba(107, 255, 184, 0.5) !important;
+}
+
+.badge.bg-danger {
+  background: linear-gradient(135deg, rgba(255, 107, 157, 0.7), rgba(255, 64, 129, 0.7)) !important;
+  color: white !important;
+  box-shadow: 0 0 15px rgba(255, 107, 157, 0.5) !important;
+}
+
+.badge.bg-warning {
+  background: linear-gradient(135deg, rgba(255, 217, 61, 0.7), rgba(255, 179, 0, 0.7)) !important;
+  color: white !important;
+  box-shadow: 0 0 15px rgba(255, 217, 61, 0.5) !important;
+}
+
+.badge.bg-light {
+  background: rgba(255, 255, 255, 0.3) !important;
+  color: white !important;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3) !important;
+}
+
+.badge.bg-dark {
+  background: rgba(30, 30, 50, 0.6) !important;
+  color: white !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Alerts - Glowing Panels */
+.alert {
+  backdrop-filter: blur(15px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+.alert-info {
+  background: rgba(79, 172, 254, 0.3) !important;
+  color: white !important;
+  box-shadow: 0 0 20px rgba(79, 172, 254, 0.4) !important;
+}
+
+.alert-success {
+  background: rgba(107, 255, 184, 0.3) !important;
+  color: white !important;
+  box-shadow: 0 0 20px rgba(107, 255, 184, 0.4) !important;
+}
+
+.alert-warning {
+  background: rgba(255, 217, 61, 0.3) !important;
+  color: white !important;
+  box-shadow: 0 0 20px rgba(255, 217, 61, 0.4) !important;
+}
+
+.alert-danger {
+  background: rgba(255, 107, 157, 0.3) !important;
+  color: white !important;
+  box-shadow: 0 0 20px rgba(255, 107, 157, 0.4) !important;
+}
+
+/* Dropdowns - Frosted Glass */
+.dropdown-menu {
+  background: rgba(30, 30, 50, 0.8) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+}
+
+.dropdown-item {
+  color: white !important;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background: rgba(255, 255, 255, 0.15) !important;
+  color: white !important;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2) !important;
+}
+
+.dropdown-divider {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Text & Background Utilities */
+.text-muted {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.text-primary {
+  color: #667eea !important;
+  text-shadow: 0 0 10px rgba(102, 126, 234, 0.5) !important;
+}
+
+.text-success {
+  color: #6bffb8 !important;
+  text-shadow: 0 0 10px rgba(107, 255, 184, 0.5) !important;
+}
+
+.text-danger {
+  color: #ff6b9d !important;
+  text-shadow: 0 0 10px rgba(255, 107, 157, 0.5) !important;
+}
+
+.text-warning {
+  color: #ffd93d !important;
+  text-shadow: 0 0 10px rgba(255, 217, 61, 0.5) !important;
+}
+
+.bg-light {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: white !important;
+}
+
+.bg-white {
+  background: rgba(255, 255, 255, 0.12) !important;
+  backdrop-filter: blur(10px) !important;
+  color: white !important;
+}
+
+.border {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+hr {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  opacity: 0.6 !important;
+}
+
+/* Report Section Special Styling */
+.report-section {
+  background: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
+}
+
+.report-section h4 {
+  color: white !important;
+  border-bottom: 2px solid rgba(103, 126, 234, 0.6) !important;
+  text-shadow: 0 0 20px rgba(103, 126, 234, 0.6) !important;
+}
+
+/* ============================================================
+   SPECIAL EFFECTS - Extra Sparkle!
+   ============================================================ */
+
+/* Add subtle animation to cards on hover */
+.card:hover,
+.progress-task-card:hover,
+.kanban-task-card:hover {
+  animation: subtleGlow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes subtleGlow {
+  0% {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2),
+                0 0 20px rgba(255, 255, 255, 0.2);
+  }
+  100% {
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3),
+                0 0 30px rgba(255, 255, 255, 0.4);
+  }
+}

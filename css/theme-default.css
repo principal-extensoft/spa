@@ -1,0 +1,549 @@
+/* ============================================================
+   THEME-DEFAULT.CSS - Color & Visual Styling
+   ============================================================
+   Contains: colors, backgrounds, borders, shadows, gradients
+   Works with base.css for complete styling
+   ============================================================ */
+
+/* ============================================================
+   GLOBAL COLORS
+   ============================================================ */
+
+body {
+  background-color: #f8f9fa;
+}
+
+/* ============================================================
+   URGENCY & IMPORTANCE COLORS
+   ============================================================ */
+
+.urgency-high {
+  color: #dc3545;
+}
+
+.urgency-med {
+  color: #ffc107;
+}
+
+.urgency-low {
+  color: #28a745;
+}
+
+.importance-high {
+  background-color: #dc3545;
+  color: white;
+}
+
+.importance-med {
+  background-color: #ffc107;
+  color: black;
+}
+
+.importance-low {
+  background-color: #28a745;
+  color: white;
+}
+
+/* ============================================================
+   SIDEBAR COLORS
+   ============================================================ */
+
+.sidebar {
+  background-color: #f8f9fa;
+  border-right: 1px solid #dee2e6;
+}
+
+.sidebar-toggle {
+  background: #6c757d;
+  color: white;
+}
+
+.sidebar-toggle:hover {
+  background: #495057;
+}
+
+.sidebar-nav-item {
+  background: white;
+  border: 1px solid #dee2e6;
+  color: #495057;
+}
+
+.sidebar-nav-item:hover {
+  background: #e9ecef;
+  border-color: #6c757d;
+}
+
+.sidebar-nav-item.active {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+/* ============================================================
+   SUMMARY CARDS
+   ============================================================ */
+
+.summary-card {
+  background-color: #e9ecef;
+}
+
+.summary-card p {
+  color: #495057;
+}
+
+/* ============================================================
+   EDITABLE ELEMENTS
+   ============================================================ */
+
+.editable:hover {
+  background-color: #f8f9fa;
+}
+
+.editing {
+  background-color: #fff3cd;
+}
+
+/* ============================================================
+   CALENDAR COLORS
+   ============================================================ */
+
+.calendar-table td {
+  border-color: #dee2e6;
+}
+
+.task-event {
+  background-color: #007bff;
+  color: white;
+}
+
+.calendar-controls {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border: 1px solid #e9ecef;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.calendar-detail-section {
+  background: white;
+  border: 1px solid #e9ecef;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.calendar-day-cell {
+  background: white;
+  border: 1px solid #e9ecef;
+}
+
+.calendar-day-cell:hover {
+  background: #f8f9fa;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.calendar-day-cell.selected {
+  background: #e7f3ff;
+  border-color: #007bff;
+}
+
+.calendar-day-cell.other-month {
+  background: #fafafa;
+  color: #adb5bd;
+}
+
+.calendar-day-cell.today {
+  background: #fff3cd;
+  border-color: #ffc107;
+}
+
+.calendar-task-indicator {
+  background: #e7f3ff;
+  color: #0056b3;
+  border-left: 3px solid #007bff;
+}
+
+.calendar-hours-badge {
+  background: rgba(0, 123, 255, 0.1);
+  color: #0056b3;
+}
+
+/* ============================================================
+   PROGRESS TASK CARDS
+   ============================================================ */
+
+.progress-task-card {
+  background: white;
+  border: 1px solid #e9ecef;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.progress-task-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.progress-task-card.overdue {
+  border-left: 4px solid #dc3545;
+}
+
+/* Task Card Header Status Colors */
+.task-card-header.status-not-started {
+  background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+  color: #495057;
+}
+
+.task-card-header.status-in-progress {
+  background: linear-gradient(135deg, #cfe2ff 0%, #b6d4fe 100%);
+  color: #084298;
+}
+
+.task-card-header.status-blocked {
+  background: linear-gradient(135deg, #f8d7da 0%, #f5c2c7 100%);
+  color: #842029;
+}
+
+.task-card-header.status-completed {
+  background: linear-gradient(135deg, #d1e7dd 0%, #badbcc 100%);
+  color: #0a3622;
+}
+
+.task-card-header.status-deferred {
+  background: linear-gradient(135deg, #fff3cd 0%, #ffecb5 100%);
+  color: #664d03;
+}
+
+/* Urgency Indicators */
+.urgency-indicator.urgency-high {
+  background-color: rgba(220, 53, 69, 0.2);
+  color: #dc3545;
+}
+
+.urgency-indicator.urgency-med {
+  background-color: rgba(255, 193, 7, 0.2);
+  color: #cc7a00;
+}
+
+.urgency-indicator.urgency-low {
+  background-color: rgba(40, 167, 69, 0.2);
+  color: #28a745;
+}
+
+/* Task Reason Badges */
+.task-reason-badge {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.due-badge-reason {
+  background-color: rgba(108, 117, 125, 0.15);
+  color: #6c757d;
+}
+
+.time-badge-reason {
+  background-color: rgba(108, 117, 125, 0.15);
+  color: #6c757d;
+}
+
+.both-badge-reason {
+  background-color: rgba(108, 117, 125, 0.15);
+  color: #6c757d;
+}
+
+.task-dates {
+  color: #6c757d;
+}
+
+/* Progress Bars */
+.progress {
+  background-color: #e9ecef;
+}
+
+.progress-bar {
+  background: linear-gradient(90deg, #007bff 0%, #0056b3 100%);
+}
+
+.progress-label {
+  color: #6c757d;
+}
+
+/* ============================================================
+   BOARD VIEW (KANBAN) COLORS
+   ============================================================ */
+
+.kanban-column {
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+}
+
+.kanban-column-header {
+  color: #212529;
+  border-bottom-color: #dee2e6;
+}
+
+.kanban-column.status-not-started .kanban-column-header {
+  border-bottom-color: #6c757d;
+}
+
+.kanban-column.status-in-progress .kanban-column-header {
+  border-bottom-color: #0d6efd;
+}
+
+.kanban-column.status-blocked .kanban-column-header {
+  border-bottom-color: #dc3545;
+}
+
+.kanban-column.status-completed .kanban-column-header {
+  border-bottom-color: #198754;
+}
+
+.kanban-column.status-deferred .kanban-column-header {
+  border-bottom-color: #ffc107;
+}
+
+.task-count-badge {
+  background: rgba(0, 0, 0, 0.1);
+  color: #495057;
+}
+
+.kanban-task-card {
+  background: white;
+  border: 1px solid #e9ecef;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.kanban-task-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-color: #007bff;
+}
+
+.kanban-task-meta {
+  color: #6c757d;
+}
+
+/* ============================================================
+   BOARD DETAIL PANE COLORS
+   ============================================================ */
+
+.board-detail-pane {
+  background: white;
+  border: 1px solid #e9ecef;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.board-detail-empty {
+  color: #6c757d;
+}
+
+.detail-metric {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border: 1px solid #dee2e6;
+}
+
+.detail-metric-label {
+  color: #6c757d;
+}
+
+.detail-metric-value {
+  color: #212529;
+}
+
+.detail-description,
+.detail-notes {
+  background: #f8f9fa;
+  color: #495057;
+  border: 1px solid #e9ecef;
+}
+
+.detail-history-item,
+.detail-log-item {
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+}
+
+.detail-history-date,
+.detail-log-date {
+  color: #6c757d;
+}
+
+/* ============================================================
+   WORK VIEW (ESTIMATION) COLORS
+   ============================================================ */
+
+.estimation-panel {
+  background: linear-gradient(135deg, #e7f3ff 0%, #cfe2ff 100%);
+  border: 1px solid #b6d4fe;
+}
+
+.estimation-title {
+  color: #084298;
+}
+
+.slider-label {
+  color: #212529;
+}
+
+.form-range {
+  background: linear-gradient(to right, #e9ecef 0%, #dee2e6 100%);
+}
+
+.form-range::-webkit-slider-thumb {
+  background: #007bff;
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.form-range::-webkit-slider-thumb:hover {
+  background: #0056b3;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+.form-range::-moz-range-thumb {
+  background: #007bff;
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.form-range::-moz-range-thumb:hover {
+  background: #0056b3;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+.scale-hint {
+  color: #6c757d;
+}
+
+#velocityPrediction {
+  background: linear-gradient(135deg, #d1e7dd 0%, #badbcc 100%);
+  border: 1px solid #a3cfbb;
+  color: #0a3622;
+}
+
+#velocityPrediction i {
+  color: #198754;
+}
+
+/* ============================================================
+   WORK SESSION COLORS
+   ============================================================ */
+
+.work-session-section {
+  border-top-color: #e9ecef;
+}
+
+.work-session-info {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-color: #dee2e6;
+}
+
+.work-session-row:not(:last-child) {
+  border-bottom-color: #dee2e6;
+}
+
+.work-session-label {
+  color: #495057;
+}
+
+.work-session-value {
+  color: #212529;
+}
+
+.no-session-message {
+  background: #f8f9fa;
+  border-color: #dee2e6;
+  color: #6c757d;
+}
+
+/* ============================================================
+   REPORTS VIEW COLORS
+   ============================================================ */
+
+.velocity-section {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border: 1px solid #dee2e6;
+}
+
+.velocity-metric {
+  background: white;
+  border: 1px solid #dee2e6;
+}
+
+.velocity-metric-label {
+  color: #6c757d;
+}
+
+.velocity-metric-value {
+  color: #007bff;
+}
+
+.velocity-accuracy {
+  background: white;
+  border: 1px solid #dee2e6;
+}
+
+.accuracy-bar-container {
+  background: #e9ecef;
+}
+
+.accuracy-bar.within-range {
+  background: linear-gradient(90deg, #28a745 0%, #20c997 100%);
+  color: white;
+}
+
+.accuracy-bar.underestimated {
+  background: linear-gradient(90deg, #ffc107 0%, #ffb300 100%);
+  color: #000;
+}
+
+.accuracy-bar.overestimated {
+  background: linear-gradient(90deg, #dc3545 0%, #c82333 100%);
+  color: white;
+}
+
+.velocity-interpretation {
+  background: #fff3cd;
+  border: 1px solid #ffecb5;
+  color: #664d03;
+}
+
+.velocity-interpretation h5 {
+  color: #523502;
+}
+
+/* ============================================================
+   BOOTSTRAP OVERRIDES & EXTENSIONS
+   ============================================================ */
+
+.badge.bg-info {
+  background-color: #0dcaf0 !important;
+  color: #000;
+}
+
+.btn-outline-info {
+  color: #0dcaf0;
+  border-color: #0dcaf0;
+}
+
+.btn-outline-info:hover {
+  background-color: #0dcaf0;
+  border-color: #0dcaf0;
+  color: #000;
+}
+
+/* ============================================================
+   REPORT SECTION OVERRIDES
+   ============================================================ */
+
+.report-section {
+  background: white;
+  border: 1px solid #e9ecef;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.report-section h4 {
+  color: #212529;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.report-section .badge.bg-info {
+  background-color: #0dcaf0 !important;
+}
