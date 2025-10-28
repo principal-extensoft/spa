@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Time Tracker</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+  <link href="css/rocket-styles.css" rel="stylesheet">
+  <link href="css/tracker.css" rel="stylesheet">
+  
+  <!-- New Modular CSS Architecture -->
+  <link href="css/base.css" rel="stylesheet">
+  <link href="css/theme-default.css" rel="stylesheet">
+
+</head>
+<body>
+  <div class="app-container">
+    <!-- Left Sidebar for Quick Add -->
+    <div class="sidebar" id="sidebar">
+      <!-- Sidebar Toggle Button -->
+      <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()" title="Toggle sidebar">
+        <i class="fas fa-chevron-left" id="toggleIcon"></i>
+      </button>
+      
+      <!-- Sidebar Content (Hidden when collapsed) -->
+      <div class="sidebar-content">
+        <!--
+        <h5 class="mb-3"><i class="fas fa-plus-circle"></i> Quick Add Task</h5>
+      -->
+        
+        <!-- Selected Category Lists Badge Display -->
+        <div id="selectedCategoryListsBadges" class="mb-3" style="display: none;">
+          <div class="d-flex justify-content-between align-items-center mb-1">
+            <div class="small text-muted">Active Category Lists:</div>
+            <button class="btn btn-outline-secondary btn-sm" onclick="manageCategoryLists()" title="Manage category list selection">
+              <i class="fas fa-cog fa-sm"></i>
+            </button>
+          </div>
+          <div id="categoryListsBadgeContainer"></div>
+        </div>
+        
+      <div class="quick-add-form">
+        <div class="mb-3">
+          <label class="form-label">Task Title</label>
+          <input type="text" class="form-control" id="quickTaskTitle" placeholder="Enter task title..." required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Due Date</label>
+          <input type="date" class="form-control" id="quickTaskDue" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Status</label>
+          <select class="form-select" id="quickTaskStatus">
+            <option value="Ready">Ready</option>
+            <option value="Estimated">Estimated</option>
+            <option value="InProgress">InProgress</option>
+            <option value="Blocked">Blocked</option>
+            <option value="Backburner">Backburner</option>
+            <option value="OnHold">OnHold</option>
+            <option value="Completed">Completed</option>
+            <option value="Abandoned">Abandoned</option>
+            <option value="Archived">Archived</option>
+          </select>
+        </div>
+        <button class="btn btn-primary w-100 mb-3" id="quickAddBtn">
+          <i class="fas fa-plus"></i> Add Task
+        </button>
+        
+        <!-- Advanced Options Toggle -->
+        <button class="btn btn-outline-secondary w-100 mb-2" id="expandAddBtn">
+          <i class="fas fa-chevron-down"></i> More Options
+        </button>
+        
+        <!-- Expanded form (hidden by default) -->
+        <div id="expandedAddForm" style="display: none;">
+          <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea class="form-control" id="quickTaskText" rows="3"></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Notes</label>
+            <textarea class="form-control" id="quickTaskNotes" rows="4" placeholder="Additional notes, links, reminders..."></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Urgency</label>
+            <select class="form-select" id="quickTaskUrgency">
+              <option value="Low">Low</option>
+              <option value="Med">Med</option>
+              <option value="High">High</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Importance</label>
+            <select class="form-select" id="quickTaskImportance">
+              <option value="Low">Low</option>
+              <option value="Med">Med</option>
+              <option value="High">High</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Estimate (hrs)</label>
+            <input type="number" class="form-control" id="quickTaskEstimate" min="0" step="0.1" value="0">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Remaining (hrs)</label>
+            <input type="number" class="form-control" id="quickTaskRemaining" min="0" step="0.1" value="0">
+            <small class="form-text text-muted">Auto-syncs with estimate until you manually edit it</small>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Project</label>
+            <select class="form-select" id="quickTaskProject">
+              <option value="">No Project (AdHoc)</option>
+              <!-- Projects will be populated here -->
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Phase</label>
+            <select class="form-select" id="quickTaskPhase">
+              <option value="">No Phase</option>
+              <!-- Phases will be populated here -->
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Category Lists</label>
+            <div id="quickTaskCategoryLists" class="category-lists-selector">
+              <!-- Category lists will be populated here -->
+            </div>
+            <small class="form-text text-muted">Select which category lists to use for time logging on this task</small>
+          </div>
+        </div>
+      </div>
+      </div> <!-- End sidebar-content -->
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+      <!-- Header Bar -->
+      <div class="header-bar">
+        <h1 class="header-title"><i class="fas fa-tasks"></i> Task Time Tracker</h1>
+        
+        <!-- Global Filters -->
+        <div class="global-filters">
+          <select id="globalProjectFilter">
+            <option value="">All Projects</option>
+          </select>
+          <select id="globalPhaseFilter">
+            <option value="">All Phases</option>
+          </select>
+          <button class="filter-clear" id="globalFilterClear" title="Clear all filters">×</button>
+        </div>
+        
+        <!-- Import/Export on the far right -->
+        <div class="header-actions">
+          <!-- Punch Clock Button -->
+          <button class="btn btn-outline-primary btn-sm" id="punchClockBtn">
+            <i class="fas fa-clock"></i> <span id="punchClockText">Punch In</span>
+          </button>
+          <!-- Category Lists Button -->
+          <button class="btn btn-outline-info btn-sm" id="categoryListsBtn" data-bs-toggle="modal" data-bs-target="#categoryListsModal">
+            <i class="fas fa-tags"></i> Categories
+          </button>
+          <!-- Projects Button -->
+          <button class="btn btn-outline-warning btn-sm" id="projectsBtn" data-bs-toggle="modal" data-bs-target="#projectsModal">
+            <i class="fas fa-project-diagram"></i> Projects
+          </button>
+          <!-- Phases Button -->
+          <button class="btn btn-outline-secondary btn-sm" id="phasesBtn" data-bs-toggle="modal" data-bs-target="#phaseListsModal">
+            <i class="fas fa-layer-group"></i> Phases
+          </button>
+          <!-- Todo List Button -->
+          <button class="btn btn-outline-success btn-sm" id="todoListBtn" data-bs-toggle="modal" data-bs-target="#todoListModal">
+            <i class="fas fa-list-check"></i>
+          </button>
+          <button class="btn btn-outline-secondary btn-sm" id="exportBtn">
+            <i class="fas fa-download"></i> Export
+          </button>
+          <input type="file" id="importFile" accept=".json" style="display: none;">
+          <button class="btn btn-outline-secondary btn-sm" id="importBtn">
+            <i class="fas fa-upload"></i> Import
+          </button>
+        </div>
+      </div>
+
+      <!-- Content Area -->
+      <div class="content-area">
+        <ul class="nav nav-tabs mb-3">
+          <li class="nav-item">
+            <a class="nav-link active" id="boardTab" href="#board">Board</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="monthTab" href="#month">Month</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="todayTab" href="#today">Today</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="reportsTab" href="#reports">
+              <i class="fas fa-chart-bar me-1"></i>Reports
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="workTab" href="#work" style="display: none;">
+              <i class="fas fa-edit me-1"></i>Work
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="spaceportTab" href="#spaceport">
+              <i class="fas fa-rocket me-1"></i>SpacePort
+            </a>
+          </li>
+        </ul>
+    
+    <div id="summary"></div>
+    <div id="taskList"></div>
+    
+    <!-- SpacePort View -->
+    <div id="spaceportView">
+      <!-- Mission Control Panel - Hidden (building serves as interface) -->
+      <div class="mission-control" style="display: none;">
+        <div class="control-panel">
+          <h6>◊ Mission Control ◊</h6>
+          <div class="mission-list" id="missionList">
+            <div class="text-center" style="color: #888; font-size: 0.8rem; padding: 20px;">
+              Punch In to Load Missions
+            </div>
+          </div>
+          
+          <div class="launch-controls" id="launchControls">
+            <div style="color: #fff; font-size: 0.8rem; margin-bottom: 8px;">
+              Active Mission: <span id="activeMissionName">None</span>
+            </div>
+            <button class="launch-btn" id="launchBtn">
+              🚀 Launch Mission
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Spaceport Stats -->
+      <div class="spaceport-stats">
+        <h6>◊ Spaceport Status ◊</h6>
+        <div class="stat-row">
+          <span>Active Rocket:</span>
+          <span class="stat-value" id="activeRocketDisplay">None</span>
+        </div>
+        <div class="stat-row">
+          <span>Mission Time:</span>
+          <span class="stat-value" id="missionTimeDisplay">00:00:00</span>
+        </div>
+        <div class="stat-row">
+          <span>Rockets Deployed:</span>
+          <span class="stat-value" id="rocketsCount">0</span>
+        </div>
+        <div class="stat-row">
+          <span>Energy Status:</span>
+          <span class="stat-value" id="energyStatus">Standby</span>
+        </div>
+        <hr style="border-color: rgba(100, 150, 255, 0.3); margin: 10px 0;">
+        <div style="font-size: 0.7rem; color: #888; line-height: 1.3;">
+          <div><strong>Operations:</strong></div>
+          <div>• Select mission to deploy rocket</div>
+          <div>• Click rocket to switch context</div>
+          <div>• Launch to commit time</div>
+        </div>
+      </div>
+      
+      <!-- Spaceport Canvas -->
+      <canvas id="spaceportCanvas" width="1200" height="800"></canvas>
+      
+      <!-- Punch Controls -->
+      <div class="punch-controls">
+        <div class="punch-status-display" id="spaceportStatus">
+          Mission Control Standby
+        </div>
+        <button class="punch-btn" id="spaceportPunchBtn">
+          Initiate Operations
+        </button>
+      </div>
+    </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category Lists Manager Modal -->
+  <div class="modal fade" id="categoryListsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <i class="fas fa-tags me-2"></i>Category Lists Manager
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <!-- Lists Panel -->
+            <div class="col-md-4">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h6 class="mb-0">Category Lists</h6>
+                <button id="newCategoryListBtn" class="btn btn-primary btn-sm">
+                  <i class="fas fa-plus me-1"></i>New List
+                </button>
+              </div>
+              <div id="categoryListsContainer" class="list-group">
+                <!-- Lists will be populated here -->
+              </div>
+            </div>
+            
+            <!-- Editor Panel -->
+            <div class="col-md-8">
+              <div id="categoryListEditor" style="display: none;">
+                <form id="categoryListForm">
+                  <div class="mb-3">
+                    <label for="categoryListTitle" class="form-label">List Title</label>
+                    <input type="text" class="form-control" id="categoryListTitle" required>
+                    <div class="form-text">Slug: <span id="categoryListSlugPreview"></span></div>
+                  </div>
+                  
+                  <div class="mb-3">
+                    <label for="categoryListDescription" class="form-label">Description</label>
+                    <textarea class="form-control" id="categoryListDescription" rows="2"></textarea>
+                  </div>
+                  
+                  <div class="mb-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <label class="form-label mb-0">Categories</label>
+                      <button type="button" id="addCategoryBtn" class="btn btn-outline-primary btn-sm">
+                        <i class="fas fa-plus me-1"></i>Add Category
+                      </button>
+                    </div>
+                    <div id="categoriesContainer" class="border rounded p-2" style="min-height: 200px; max-height: 300px; overflow-y: auto;">
+                      <!-- Categories will be populated here -->
+                    </div>
+                  </div>
+                  
+                  <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-success">
+                      <i class="fas fa-save me-1"></i>Save List
+                    </button>
+                    <button type="button" id="deleteCategoryListBtn" class="btn btn-danger" style="display: none;">
+                      <i class="fas fa-trash me-1"></i>Delete List
+                    </button>
+                    <button type="button" id="cancelCategoryListBtn" class="btn btn-secondary">
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              </div>
+              
+              <div id="categoryListPlaceholder" class="text-center text-muted py-5">
+                <i class="fas fa-tags fa-3x mb-3 opacity-50"></i>
+                <p>Select a category list to edit, or create a new one.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Projects Manager Modal -->
+  <div class="modal fade" id="projectsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <i class="fas fa-project-diagram me-2"></i>Projects Manager
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <!-- Projects Panel -->
+            <div class="col-md-4">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h6 class="mb-0">Projects</h6>
+                <button id="newProjectBtn" class="btn btn-primary btn-sm">
+                  <i class="fas fa-plus me-1"></i>New Project
+                </button>
+              </div>
+              <div id="projectsContainer" class="list-group">
+                <!-- Projects will be populated here -->
+              </div>
+            </div>
+            
+            <!-- Editor Panel -->
+            <div class="col-md-8">
+              <div id="projectEditor" style="display: none;">
+                <form id="projectForm">
+                  <div class="mb-3">
+                    <label for="projectName" class="form-label">Project Name</label>
+                    <input type="text" class="form-control" id="projectName" required>
+                  </div>
+                  
+                  <div class="mb-3">
+                    <label for="projectDescription" class="form-label">Description</label>
+                    <textarea class="form-control" id="projectDescription" rows="3"></textarea>
+                  </div>
+                  
+                  <div class="mb-3">
+                    <label for="projectStatus" class="form-label">Status</label>
+                    <select class="form-select" id="projectStatus" required>
+                      <option value="Ready">Ready</option>
+                      <option value="Estimated">Estimated</option>
+                      <option value="InProgress">In Progress</option>
+                      <option value="Blocked">Blocked</option>
+                      <option value="Backburner">Backburner</option>
+                      <option value="OnHold">On Hold</option>
+                      <option value="Completed">Completed</option>
+                      <option value="Abandoned">Abandoned</option>
+                      <option value="Archived">Archived</option>
+                    </select>
+                  </div>
+                  
+                  <div class="mb-3">
+                    <label for="projectPhaseList" class="form-label">Phase List</label>
+                    <select class="form-select" id="projectPhaseList">
+                      <option value="">No Phase List</option>
+                      <!-- Phase lists will be populated here -->
+                    </select>
+                    <small class="form-text text-muted">Select a phase list to associate with this project</small>
+                  </div>
+                  
+                  <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-success">
+                      <i class="fas fa-save me-1"></i>Save Project
+                    </button>
+                    <button type="button" id="deleteProjectBtn" class="btn btn-danger" style="display: none;">
+                      <i class="fas fa-trash me-1"></i>Delete Project
+                    </button>
+                    <button type="button" id="cancelProjectBtn" class="btn btn-secondary">
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              </div>
+              
+              <div id="projectPlaceholder" class="text-center text-muted py-5">
+                <i class="fas fa-project-diagram fa-3x mb-3 opacity-50"></i>
+                <p>Select a project to edit, or create a new one.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase Lists Manager Modal -->
+  <div class="modal fade" id="phaseListsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <i class="fas fa-layer-group me-2"></i>Phase Lists Manager
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <!-- Lists Panel -->
+            <div class="col-md-4">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h6 class="mb-0">Phase Lists</h6>
+                <button id="newPhaseListBtn" class="btn btn-primary btn-sm">
+                  <i class="fas fa-plus me-1"></i>New List
+                </button>
+              </div>
+              <div id="phaseListsContainer" class="list-group">
+                <!-- Lists will be populated here -->
+              </div>
+            </div>
+            
+            <!-- Editor Panel -->
+            <div class="col-md-8">
+              <div id="phaseListEditor" style="display: none;">
+                <form id="phaseListForm">
+                  <div class="mb-3">
+                    <label for="phaseListTitle" class="form-label">List Title</label>
+                    <input type="text" class="form-control" id="phaseListTitle" required>
+                    <div class="form-text">Slug: <span id="phaseListSlugPreview"></span></div>
+                  </div>
+                  
+                  <div class="mb-3">
+                    <label for="phaseListDescription" class="form-label">Description</label>
+                    <textarea class="form-control" id="phaseListDescription" rows="2"></textarea>
+                  </div>
+                  
+                  <div class="mb-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <label class="form-label mb-0">Phases</label>
+                      <button type="button" id="addPhaseBtn" class="btn btn-outline-primary btn-sm">
+                        <i class="fas fa-plus me-1"></i>Add Phase
+                      </button>
+                    </div>
+                    <div id="phasesContainer" class="border rounded p-2" style="min-height: 200px; max-height: 300px; overflow-y: auto;">
+                      <!-- Phases will be populated here -->
+                    </div>
+                  </div>
+                  
+                  <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-success">
+                      <i class="fas fa-save me-1"></i>Save List
+                    </button>
+                    <button type="button" id="deletePhaseListBtn" class="btn btn-danger" style="display: none;">
+                      <i class="fas fa-trash me-1"></i>Delete List
+                    </button>
+                    <button type="button" id="cancelPhaseListBtn" class="btn btn-secondary">
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              </div>
+              
+              <div id="phaseListPlaceholder" class="text-center text-muted py-5">
+                <i class="fas fa-layer-group fa-3x mb-3 opacity-50"></i>
+                <p>Select a phase list to edit, or create a new one.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Todo List Modal -->
+  <div class="modal fade" id="todoListModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <i class="fas fa-list-check me-2"></i>Todo List
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Todo Form -->
+          <div class="todo-form mb-4">
+            <div class="input-group mb-2">
+              <input type="text" id="modalTodoTitleInput" class="form-control" placeholder="Add a new todo..." maxlength="100">
+              <button class="btn btn-primary" type="button" id="modalTodoAddBtn">
+                <i class="fas fa-plus"></i>
+              </button>
+            </div>
+            <div id="modalTodoDetailsInput" class="todo-details" style="display: none;">
+              <textarea class="form-control" placeholder="Optional details..." rows="2" maxlength="300"></textarea>
+              <div class="mt-2 d-flex justify-content-end gap-2">
+                <button class="btn btn-sm btn-outline-secondary" id="modalCancelTodoDetails">Cancel</button>
+                <button class="btn btn-sm btn-success" id="modalSubmitTodoWithDetails">Add Todo</button>
+              </div>
+            </div>
+            <small class="text-muted">Press Enter to add quickly, or click + for details</small>
+          </div>
+          
+          <!-- Todo List Controls -->
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h6 class="mb-0">Your Todos</h6>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="modalShowCompletedTodos">
+              <label class="form-check-label" for="modalShowCompletedTodos">
+                Show completed
+              </label>
+            </div>
+          </div>
+          
+          <!-- Todo List Container -->
+          <div id="modalTodosList" style="max-height: 400px; overflow-y: auto;">
+            <!-- Todos will be populated here -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Task Details Modal -->
+  <div class="modal fade" id="taskDetailsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <i class="fas fa-tasks me-2"></i>Task Details
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="taskDetailsForm">
+            <input type="hidden" id="taskDetailsId">
+            
+            <div class="row">
+              <div class="col-md-8">
+                <div class="mb-3">
+                  <label for="taskDetailsTitle" class="form-label">Title</label>
+                  <input type="text" class="form-control" id="taskDetailsTitle" required>
+                </div>
+                
+                <div class="mb-3">
+                  <label for="taskDetailsDescription" class="form-label">Description</label>
+                  <textarea class="form-control" id="taskDetailsDescription" rows="3"></textarea>
+                </div>
+                
+                <div class="mb-3">
+                  <label for="taskDetailsNotes" class="form-label">Notes</label>
+                  <textarea class="form-control" id="taskDetailsNotes" rows="4"></textarea>
+                </div>
+              </div>
+              
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label for="taskDetailsDueOn" class="form-label">Due Date</label>
+                  <input type="date" class="form-control" id="taskDetailsDueOn" required>
+                </div>
+                
+                <div class="mb-3">
+                  <label for="taskDetailsStatus" class="form-label">Status</label>
+                  <select class="form-select" id="taskDetailsStatus">
+                    <option value="Ready">Ready</option>
+                    <option value="Estimated">Estimated</option>
+                    <option value="InProgress">InProgress</option>
+                    <option value="Blocked">Blocked</option>
+                    <option value="Backburner">Backburner</option>
+                    <option value="OnHold">OnHold</option>
+                    <option value="Completed">Completed</option>
+                    <option value="Abandoned">Abandoned</option>
+                    <option value="Archived">Archived</option>
+                  </select>
+                </div>
+                
+                <div class="row">
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="taskDetailsUrgency" class="form-label">Urgency</label>
+                      <select class="form-select" id="taskDetailsUrgency">
+                        <option value="Low">Low</option>
+                        <option value="Med">Med</option>
+                        <option value="High">High</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="mb-3">
+                      <label for="taskDetailsImportance" class="form-label">Importance</label>
+                      <select class="form-select" id="taskDetailsImportance">
+                        <option value="Low">Low</option>
+                        <option value="Med">Med</option>
+                        <option value="High">High</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="mb-3">
+                  <label for="taskDetailsEstimate" class="form-label">Estimate (hrs)</label>
+                  <input type="number" class="form-control" id="taskDetailsEstimate" min="0" step="0.1" value="0">
+                </div>
+              </div>
+            </div>
+            
+            <hr>
+            
+            <div class="row">
+              <div class="col-6">
+                <div class="mb-3">
+                  <label for="taskDetailsProject" class="form-label">Project</label>
+                  <select class="form-select" id="taskDetailsProject">
+                    <option value="">No Project (AdHoc)</option>
+                    <!-- Projects will be populated here -->
+                  </select>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="mb-3">
+                  <label for="taskDetailsPhase" class="form-label">Phase</label>
+                  <select class="form-select" id="taskDetailsPhase">
+                    <option value="">No Phase</option>
+                    <!-- Phases will be populated here -->
+                  </select>
+                </div>
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label class="form-label">Category Lists</label>
+              <div id="taskDetailsCategoryLists" class="category-lists-selector">
+                <!-- Category lists will be populated here -->
+              </div>
+              <small class="form-text text-muted">Select which category lists to use for time logging on this task</small>
+            </div>
+            
+            <div class="d-flex justify-content-between">
+              <button type="submit" class="btn btn-success">
+                <i class="fas fa-save me-1"></i>Save Changes
+              </button>
+              <button type="button" id="deleteTaskDetailsBtn" class="btn btn-outline-danger">
+                <i class="fas fa-trash me-1"></i>Delete Task
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Time Log Modal -->
+  <div class="modal fade" id="timeLogModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            <i class="fas fa-clock me-2"></i>Log Time
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="timeLogForm">
+            <input type="hidden" id="timeLogTaskId">
+            
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Task</label>
+              <div id="timeLogTaskDisplay" class="p-2 bg-light rounded">
+                <!-- Task title will be displayed here -->
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="timeLogHours" class="form-label">Hours</label>
+                  <input type="number" class="form-control" id="timeLogHours" 
+                         min="0" step="0.25" placeholder="0.0" required>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="timeLogDate" class="form-label">Date</label>
+                  <input type="date" class="form-control" id="timeLogDate" required>
+                </div>
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label class="form-label">Category</label>
+              <div id="timeLogCategoryContainer">
+                <!-- Category selector will be populated here -->
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label for="timeLogDescription" class="form-label">Description (optional)</label>
+              <textarea class="form-control" id="timeLogDescription" rows="3" 
+                        placeholder="What did you work on?"></textarea>
+            </div>
+            
+            <div class="d-flex justify-content-between">
+              <div class="d-flex gap-2">
+                <button type="button" class="btn btn-outline-secondary quick-time" data-hours="0.25">15m</button>
+                <button type="button" class="btn btn-outline-secondary quick-time" data-hours="0.5">30m</button>
+                <button type="button" class="btn btn-outline-secondary quick-time" data-hours="1">1h</button>
+                <button type="button" class="btn btn-outline-secondary quick-time" data-hours="2">2h</button>
+              </div>
+              <button type="submit" class="btn btn-success">
+                <i class="fas fa-save me-1"></i>Log Time
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-danger delete-task-btn" data-task-id="" title="Delete Task">
+            <i class="fas fa-trash me-1"></i>Delete Task
+          </button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-danger text-white">
+          <h5 class="modal-title" id="deleteConfirmModalLabel">
+            <i class="fas fa-exclamation-triangle me-2"></i>Confirm Delete
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="d-flex align-items-center mb-3">
+            <div class="bg-danger bg-opacity-10 rounded-circle p-3 me-3">
+              <i class="fas fa-trash text-danger fa-2x"></i>
+            </div>
+            <div>
+              <h6 class="mb-1">Are you sure you want to delete this item?</h6>
+              <p class="text-muted mb-0" id="deleteConfirmMessage">This action cannot be undone.</p>
+            </div>
+          </div>
+          <div class="alert alert-warning mb-0">
+            <i class="fas fa-info-circle me-2"></i>
+            <strong>Warning:</strong> <span id="deleteWarningText">This will permanently delete the item and all associated data.</span>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+            <i class="fas fa-times me-2"></i>Cancel
+          </button>
+          <button type="button" class="btn btn-danger" id="confirmDeleteBtn">
+            <i class="fas fa-trash me-2"></i>Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container for Notifications -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 9999;">
+    <!-- Toasts will be dynamically added here -->
+  </div>
+
+  <!-- Punch Clock Modal -->
+  <div class="modal fade" id="punchClockModal" tabindex="-1" aria-labelledby="punchClockModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title" id="punchClockModalLabel">
+            <i class="fas fa-clock me-2"></i>Time Clock Station
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Punch Card Visual -->
+          <div class="punch-card-container text-center mb-4">
+            <div class="punch-card">
+              <div class="punch-card-header">
+                <h6 class="mb-1">Daily Time Card</h6>
+                <div class="card-date" id="punchCardDate"></div>
+              </div>
+              <div class="punch-card-content">
+                <div class="time-slots" id="timeSlots" style="max-height: 150px; overflow-y: auto;">
+                  <!-- Dynamic time slots will be added here -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Current Status -->
+          <div class="current-status text-center mb-4">
+            <div class="status-display" id="currentStatus">
+              <div class="status-icon" id="statusIcon">🕘</div>
+              <div class="status-text" id="statusText">Ready to Start Work</div>
+              <div class="status-time" id="statusTime"></div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="action-buttons text-center">
+            <!-- Validation Messages -->
+            <div class="validation-message warning" id="punchOutWarning">
+              <i class="fas fa-exclamation-triangle me-2"></i>
+              <span id="punchOutWarningText"></span>
+              <div class="mt-2">
+                <button class="btn btn-sm btn-warning me-2" id="confirmEarlyPunchOut">Yes, End Early</button>
+                <button class="btn btn-sm btn-secondary" id="cancelEarlyPunchOut">Continue Working</button>
+              </div>
+            </div>
+
+            <!-- Primary Action (Punch In/Out) -->
+            <div class="primary-action mb-3">
+              <button class="btn btn-lg punch-btn" id="primaryPunchBtn">
+                <i class="fas fa-play"></i>
+                <span id="primaryPunchText">Start Work Day</span>
+              </button>
+            </div>
+
+            <!-- Interruption Buttons (shown when punched in) -->
+            <div class="interruption-buttons" id="interruptionButtons" style="display: none;">
+              <!-- Return to Work button (shown when on break) -->
+              <div class="return-to-work mb-3" id="returnToWorkSection" style="display: none;">
+                <button class="btn btn-success w-100" id="returnToWorkBtn">
+                  <i class="fas fa-briefcase"></i> Return to Work
+                </button>
+              </div>
+              
+              <div class="row g-2 mb-3" id="interruptionButtonsRow">
+                <div class="col-4">
+                  <button class="btn btn-outline-warning w-100" id="lunchBtn">
+                    <i class="fas fa-utensils me-1"></i>Lunch
+                  </button>
+                </div>
+                <div class="col-4">
+                  <button class="btn btn-outline-info w-100" id="meetingBtn">
+                    <i class="fas fa-users me-1"></i>Meeting
+                  </button>
+                </div>
+                <div class="col-4">
+                  <button class="btn btn-outline-secondary w-100" id="personalBtn">
+                    <i class="fas fa-user me-1"></i>Personal
+                  </button>
+                </div>
+              </div>
+              <div class="custom-interruption">
+                <div class="input-group">
+                  <input type="text" class="form-control" id="customInterruptionInput" placeholder="Custom interruption...">
+                  <button class="btn btn-outline-primary" id="addCustomInterruptionBtn">
+                    <i class="fas fa-plus"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Daily Summary -->
+          <div class="daily-summary" id="dailySummary">
+            <hr>
+            <h6><i class="fas fa-chart-bar me-2"></i>Today's Summary</h6>
+            <div class="row text-center">
+              <div class="col-3">
+                <div class="summary-item">
+                  <div class="summary-value" id="totalHours">0h 0m</div>
+                  <div class="summary-label">Total</div>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="summary-item">
+                  <div class="summary-value" id="workHours">0h 0m</div>
+                  <div class="summary-label">Work</div>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="summary-item">
+                  <div class="summary-value" id="breakHours">0h 0m</div>
+                  <div class="summary-label">Breaks</div>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="summary-item">
+                  <div class="summary-value" id="currentSession">0h 0m</div>
+                  <div class="summary-label">Session</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Time Entry Modal -->
+  <div class="modal fade" id="quickTimeModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fas fa-clock me-2"></i>Log Time</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="quickTimeTaskId">
+          <div class="mb-3">
+            <label for="quickTimeHours" class="form-label">Hours</label>
+            <input type="number" class="form-control" id="quickTimeHours" step="0.25" min="0" placeholder="e.g., 1.5">
+          </div>
+          <div class="mb-3">
+            <label for="quickTimeDate" class="form-label">Date</label>
+            <input type="date" class="form-control" id="quickTimeDate">
+          </div>
+          <div class="mb-3">
+            <label for="quickTimeNotes" class="form-label">Notes (optional)</label>
+            <textarea class="form-control" id="quickTimeNotes" rows="2" placeholder="What did you work on?"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" id="saveQuickTimeBtn">Log Time</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="js/app-controller.mjs"></script>
+</body>
+</html>

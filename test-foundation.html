@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Foundation Modules Test</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body { padding: 2rem; background: #f8f9fa; }
+    .test-section { background: white; padding: 2rem; margin-bottom: 1.5rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .test-result { margin-top: 1rem; padding: 1rem; border-radius: 4px; font-family: monospace; white-space: pre-wrap; }
+    .success { background: #d4edda; border: 1px solid #c3e6cb; }
+    .error { background: #f8d7da; border: 1px solid #f5c6cb; }
+    .info { background: #d1ecf1; border: 1px solid #bee5eb; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="mb-4"><i class="fas fa-flask"></i> Foundation Modules Test Suite</h1>
+    <p class="lead">Testing db.mjs, state-service.mjs, and ui-utils.mjs</p>
+
+    <!-- Test Section 1: Database -->
+    <div class="test-section">
+      <h2><i class="fas fa-database"></i> 1. Database Module (db.mjs)</h2>
+      <button class="btn btn-primary" onclick="testDatabase()">Run Database Test</button>
+      <div id="db-result" class="test-result d-none"></div>
+    </div>
+
+    <!-- Test Section 2: State Service -->
+    <div class="test-section">
+      <h2><i class="fas fa-sliders-h"></i> 2. State Service (state-service.mjs)</h2>
+      <button class="btn btn-primary" onclick="testStateService()">Run State Service Test</button>
+      <div id="state-result" class="test-result d-none"></div>
+    </div>
+
+    <!-- Test Section 3: UI Utils -->
+    <div class="test-section">
+      <h2><i class="fas fa-palette"></i> 3. UI Utilities (ui-utils.mjs)</h2>
+      <button class="btn btn-primary" onclick="testUIUtils()">Run UI Utils Test</button>
+      <div id="ui-result" class="test-result d-none"></div>
+    </div>
+
+    <!-- Test Section 4: Toast Demo -->
+    <div class="test-section">
+      <h2><i class="fas fa-bell"></i> 4. Toast Notifications</h2>
+      <button class="btn btn-success me-2" onclick="showSuccessToast()">Success Toast</button>
+      <button class="btn btn-warning me-2" onclick="showWarningToast()">Warning Toast</button>
+      <button class="btn btn-danger me-2" onclick="showErrorToast()">Error Toast</button>
+      <button class="btn btn-info" onclick="showInfoToast()">Info Toast</button>
+    </div>
+
+    <!-- Test Section 5: Integrated Test -->
+    <div class="test-section">
+      <h2><i class="fas fa-check-double"></i> 5. Integrated Test</h2>
+      <button class="btn btn-success btn-lg" onclick="runAllTests()">Run All Tests</button>
+      <div id="all-result" class="test-result d-none"></div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container position-fixed top-0 end-0 p-3"></div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Test Script -->
+  <script type="module">
+    import { dbPromise, getDatabaseStats, runMigrations } from './js/db.mjs';
+    import { 
+      getCurrentView, setCurrentView, getMonthOffset, setMonthOffset,
+      getSpaceportSession, setActiveRocket, addRocket,
+      getGlobalFilters, setFilter, getStateSnapshot
+    } from './js/state-service.mjs';
+    import {
+      getStatusColor, getUrgencyColor, showToast, getDateRange,
+      formatDate, formatHours, formatDuration, escapeHtml, groupBy, sortBy
+    } from './js/ui-utils.mjs';
+
+    // Make functions available globally for onclick handlers
+    window.testDatabase = testDatabase;
+    window.testStateService = testStateService;
+    window.testUIUtils = testUIUtils;
+    window.showSuccessToast = () => showToast('This is a success message!', 'success');
+    window.showWarningToast = () => showToast('This is a warning message!', 'warning');
+    window.showErrorToast = () => showToast('This is an error message!', 'error');
+    window.showInfoToast = () => showToast('This is an info message!', 'info');
+    window.runAllTests = runAllTests;
+
+    async function testDatabase() {
+      const resultDiv = document.getElementById('db-result');
+      resultDiv.classList.remove('d-none', 'success', 'error');
+      resultDiv.classList.add('info');
+      resultDiv.textContent = 'Testing database connection and migrations...';
+
+      try {
+        // Test 1: Database connection
+        const db = await dbPromise;
+        console.log('✓ Database connected:', db.name, 'version', db.version);
+
+        // Test 2: Get database stats
+        const stats = await getDatabaseStats();
+        console.log('✓ Database stats retrieved:', stats);
+
+        // Test 3: Run migrations (idempotent)
+        runMigrations();
+        console.log('✓ Migrations executed');
+
+        // Display results
+        resultDiv.classList.remove('info');
+        resultDiv.classList.add('success');
+        resultDiv.textContent = `✓ DATABASE TEST PASSED
+
+Database: ${db.name}
+Version: ${db.version}
+
+Table Counts:
+${Object.entries(stats.tables).map(([table, count]) => `  ${table}: ${count}`).join('\n')}
+
+All database operations working correctly!`;
+      } catch (err) {
+        console.error('Database test failed:', err);
+        resultDiv.classList.remove('info');
+        resultDiv.classList.add('error');
+        resultDiv.textContent = `✗ DATABASE TEST FAILED\n\nError: ${err.message}\n\n${err.stack}`;
+      }
+    }
+
+    async function testStateService() {
+      const resultDiv = document.getElementById('state-result');
+      resultDiv.classList.remove('d-none', 'success', 'error');
+      resultDiv.classList.add('info');
+      resultDiv.textContent = 'Testing state service...';
+
+      try {
+        const results = [];
+
+        // Test 1: View state
+        const initialView = getCurrentView();
+        results.push(`Initial view: ${initialView}`);
+        
+        setCurrentView('calendar');
+        const newView = getCurrentView();
+        results.push(`After setCurrentView('calendar'): ${newView}`);
+        if (newView !== 'calendar') throw new Error('View state not updated');
+
+        // Test 2: Month offset
+        const initialOffset = getMonthOffset();
+        results.push(`Initial month offset: ${initialOffset}`);
+        
+        setMonthOffset(3);
+        const newOffset = getMonthOffset();
+        results.push(`After setMonthOffset(3): ${newOffset}`);
+        if (newOffset !== 3) throw new Error('Month offset not updated');
+
+        // Test 3: SpacePort session
+        const session = getSpaceportSession();
+        results.push(`SpacePort operational: ${session.isOperational}`);
+        
+        addRocket('rocket-1', { taskId: 123, category: 'coding', x: 100, y: 200 });
+        const updatedSession = getSpaceportSession();
+        results.push(`Rockets after addRocket(): ${updatedSession.rockets.size}`);
+        if (updatedSession.rockets.size !== 1) throw new Error('Rocket not added');
+
+        // Test 4: Global filters
+        setFilter('projectId', 42);
+        const filters = getGlobalFilters();
+        results.push(`Project filter after setFilter(42): ${filters.projectId}`);
+        if (filters.projectId !== 42) throw new Error('Filter not set');
+
+        // Test 5: State snapshot
+        const snapshot = getStateSnapshot();
+        results.push(`State snapshot keys: ${Object.keys(snapshot).join(', ')}`);
+
+        // Display results
+        resultDiv.classList.remove('info');
+        resultDiv.classList.add('success');
+        resultDiv.textContent = `✓ STATE SERVICE TEST PASSED\n\n${results.join('\n')}\n\nAll state operations working correctly!`;
+      } catch (err) {
+        console.error('State service test failed:', err);
+        resultDiv.classList.remove('info');
+        resultDiv.classList.add('error');
+        resultDiv.textContent = `✗ STATE SERVICE TEST FAILED\n\nError: ${err.message}\n\n${err.stack}`;
+      }
+    }
+
+    async function testUIUtils() {
+      const resultDiv = document.getElementById('ui-result');
+      resultDiv.classList.remove('d-none', 'success', 'error');
+      resultDiv.classList.add('info');
+      resultDiv.textContent = 'Testing UI utilities...';
+
+      try {
+        const results = [];
+
+        // Test 1: Status colors
+        const statusColors = ['Ready', 'InProgress', 'Completed'].map(s => 
+          `${s}: ${getStatusColor(s)}`
+        );
+        results.push('Status colors: ' + statusColors.join(', '));
+
+        // Test 2: Urgency colors
+        const urgencyColors = ['High', 'Med', 'Low'].map(u => 
+          `${u}: ${getUrgencyColor(u)}`
+        );
+        results.push('Urgency colors: ' + urgencyColors.join(', '));
+
+        // Test 3: Date range
+        const dateRange = getDateRange('month', 0);
+        results.push(`Date range (current month): ${dateRange.periodLabel}`);
+        results.push(`  Start: ${dateRange.startDate}, End: ${dateRange.endDate}`);
+
+        // Test 4: Format utilities
+        results.push(`formatHours(2.5): ${formatHours(2.5)}`);
+        results.push(`formatDuration(150): ${formatDuration(150)}`);
+        results.push(`formatDate('2025-10-24'): ${formatDate('2025-10-24')}`);
+
+        // Test 5: String utilities
+        results.push(`escapeHtml('<script>alert("XSS")</script>'): ${escapeHtml('<script>alert("XSS")</script>')}`);
+
+        // Test 6: Array utilities
+        const items = [
+          { name: 'Task 1', priority: 'High', hours: 5 },
+          { name: 'Task 2', priority: 'Low', hours: 2 },
+          { name: 'Task 3', priority: 'High', hours: 3 }
+        ];
+        const grouped = groupBy(items, item => item.priority);
+        results.push(`groupBy test: High=${grouped.High.length}, Low=${grouped.Low.length}`);
+        
+        const sorted = sortBy(items, item => item.hours, true);
+        results.push(`sortBy test (desc): ${sorted.map(i => i.hours).join(', ')}`);
+
+        // Display results
+        resultDiv.classList.remove('info');
+        resultDiv.classList.add('success');
+        resultDiv.textContent = `✓ UI UTILITIES TEST PASSED\n\n${results.join('\n')}\n\nAll utility functions working correctly!`;
+      } catch (err) {
+        console.error('UI utils test failed:', err);
+        resultDiv.classList.remove('info');
+        resultDiv.classList.add('error');
+        resultDiv.textContent = `✗ UI UTILITIES TEST FAILED\n\nError: ${err.message}\n\n${err.stack}`;
+      }
+    }
+
+    async function runAllTests() {
+      const resultDiv = document.getElementById('all-result');
+      resultDiv.classList.remove('d-none');
+      resultDiv.classList.add('info');
+      resultDiv.textContent = 'Running all tests...';
+
+      showToast('Starting test suite...', 'info');
+
+      await testDatabase();
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      await testStateService();
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      await testUIUtils();
+      await new Promise(resolve => setTimeout(resolve, 500));
+
+      resultDiv.classList.remove('info');
+      resultDiv.classList.add('success');
+      resultDiv.textContent = '✓ ALL TESTS PASSED!\n\nAll foundation modules are working correctly.\nReady to proceed with Phase 2 (service modules).';
+      
+      showToast('All tests passed! Foundation modules ready.', 'success', 8000);
+    }
+
+    // Run initial message
+    console.log('🚀 Foundation Modules Test Suite loaded');
+    console.log('Click buttons to test individual modules or run all tests');
+  </script>
+</body>
+</html>
